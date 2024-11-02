@@ -1,6 +1,4 @@
 import { User } from "../../model/user";
-import userService from "../../service/user.service";
-import userDb from "../../repository/user.db";
 import { UserInput } from "../../types";
 import { Family } from "../../model/family";
 import familyService from "../../service/family.service";
@@ -104,31 +102,30 @@ test("given: family not in database, when: get family by name, then: throw error
     expect(getFamilyByNameMock).toHaveBeenCalledTimes(1);
 });
 
-test("given: family in database, when: get family by member, then: return family", () => {
+test("given: family in database, when: get families by member, then: return families", () => {
     //given
-    getFamilyByMemberMock.mockReturnValue(family);
-    familyDb.getFamilyByMember = getFamilyByMemberMock;
+    getFamilyByMemberMock.mockReturnValue([family]);
+    familyDb.getFamiliesByMember = getFamilyByMemberMock;
 
     //when
-    const familyByMember = familyService.getFamilyByMember(user1);
+    const familiesByMember = familyService.getFamiliesByMember(userInput1.email);
 
     //then
-    expect(familyByMember).toEqual(family);
+    expect(familiesByMember).toEqual([family]);
     expect(getFamilyByMemberMock).toHaveBeenCalledTimes(1);
 });
 
-test("given: family not in database, when: get family by member, then: throw error", () => {
+test("given: family not in database, when: get families by member, then: throw error", () => {
     //given
-    getFamilyByMemberMock.mockReturnValue(null);
-    familyDb.getFamilyByMember = getFamilyByMemberMock;
+    getFamilyByMemberMock.mockReturnValue([]);
+    familyDb.getFamiliesByMember = getFamilyByMemberMock;
 
     //when
-    const getFamilyByMember = () => familyService.getFamilyByMember(user1);
+    const getFamiliesByMember = () => familyService.getFamiliesByMember(userInput1.email);
 
     //then
-    expect(getFamilyByMember).toThrowError(`Family with member ${user1} does not exist.`);
+    expect(getFamiliesByMember).toThrow(`No families found for member ${userInput1.email}.`);
     expect(getFamilyByMemberMock).toHaveBeenCalledTimes(1);
 });
-
 
 

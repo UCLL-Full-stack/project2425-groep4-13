@@ -30,9 +30,9 @@ const families = [
         name: "Smith",
         members: [
             new User({
-                email: "john.smith@ucll.be",
+                email: "john.doe@ucll.be",
                 firstName: "John",
-                lastName: "Smith",
+                lastName: "Doe",
                 password: "Secret123",
             }),
             new User({
@@ -69,9 +69,9 @@ const getFamilyByName = (name: string): Family | null => {
     }
 };
 
-const getFamilyByMember = (member: User): Family | null => {
+const getFamiliesByMember = (email: string): Family[] => {
     try {
-        return families.find((family) => family.getMembers().includes(member)) || null;
+        return families.filter((family) => family.getMembers().some((member) => member.getEmail() === email));
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
@@ -81,5 +81,5 @@ const getFamilyByMember = (member: User): Family | null => {
 export default {
     getAllFamilies,
     getFamilyByName,
-    getFamilyByMember,
+    getFamiliesByMember,
 };

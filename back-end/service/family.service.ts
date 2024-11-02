@@ -1,9 +1,7 @@
 import { User } from "../model/user";
-import userDb from "../repository/user.db";
 import { Family } from "../model/family";
 import familyDb from "../repository/family.db";
-import { UserInput } from "../types";
-import { FamilyInput } from "../types";
+
 
 const getAllFamilies = (): Family[] => familyDb.getAllFamilies();
 
@@ -13,15 +11,15 @@ const getFamilyByName = (name: string): Family | null => {
     return family;
 };
 
-const getFamilyByMember = (member: User): Family | null => {
-    const family = familyDb.getFamilyByMember(member);
-    if (!family) throw new Error(`Family with member ${member} does not exist.`);
-    return family;
-};
+const getFamiliesByMember = (memberEmail: string): Family[] => {
+    const families = familyDb.getFamiliesByMember(memberEmail);
+    if (!families || families.length == 0) throw new Error(`No families found for member ${memberEmail}.`);
+    return families;
+}
 
 export default {
     getAllFamilies,
     getFamilyByName,
-    getFamilyByMember,
+    getFamiliesByMember
 };
 

@@ -16,7 +16,8 @@
  *              description: The user's last name.
  *            password:
  *              type: string
- *              description: The user's password.
+ *              items:
+ *                  $ref: '#/components/schemas/User'
  *      UserInput:
  *          type: object
  *          properties:
