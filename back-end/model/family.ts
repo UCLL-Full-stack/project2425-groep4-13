@@ -29,7 +29,7 @@ export class Family {
         if (!family.name?.trim()) {
             throw new Error('Name is required');
         }
-        if (!family.members) {
+        if (!family.members || family.members.length === 0) {
             throw new Error('Members are required');
         }
     }
