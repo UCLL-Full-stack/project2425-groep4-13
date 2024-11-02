@@ -55,6 +55,7 @@ const createUser = (user: User): User => {
     }
 };
 
+
 export default {
     getAllUsers,
     getUserByEmail,

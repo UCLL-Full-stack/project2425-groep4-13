@@ -5,4 +5,9 @@ type UserInput = {
     lastName: string;
 };
 
-export { UserInput };
+type FamilyInput = {
+    name: string;
+    members: UserInput[];
+};
+
+export { UserInput, FamilyInput };
