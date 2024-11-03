@@ -23,7 +23,7 @@ const FamiliesOverviewTable: React.FC<Props> = ({ families }: Props) => {
                 <td>
                   <ul>
                     {family.members.map((member, memberIndex) => (
-                      <li>{member.firstName}</li>
+                      <li>{member.firstName + " " + member.lastName}</li>
                     ))
                     }
                   </ul>
