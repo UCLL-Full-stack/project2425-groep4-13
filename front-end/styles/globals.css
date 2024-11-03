@@ -1,3 +1,4 @@
+/* GENERAL */
 :root {
   background-color: whitesmoke;
 }
@@ -15,6 +16,7 @@ h1 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* NAV */
 nav {
   background-color: forestgreen;
   display: flex;
@@ -35,13 +37,34 @@ nav a {
   border-radius: 1em;
 }
 
-table {
-  padding: 0.5em;
+
+/* TABLES */
+.list-of-tables {
+  list-style-type: none;
+  padding: 0px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.list-of-tables li {
   border: forestgreen 0.2em solid;
+  border-radius: 0.25em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+.list-of-tables p {
+  font-weight: bold;
+  margin: 0px;
+  padding: 0.5em;
+}
+
+.list-of-tables table {
+  width: 100%;
+  padding: 0.5em;
+  border: solid forestgreen 0.1em;
   border-radius: 0.25em;
 }
 
-table td {
-  padding-left: 1em;
-  padding-right: 1em;
+.list-of-tables th {
+  padding: 0%;
 }

@@ -9,29 +9,27 @@ const FamiliesOverviewTable: React.FC<Props> = ({ families }: Props) => {
   return (
     <>
       {families && (
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Members</th>
-            </tr>
-          </thead>
-          <tbody>
-            {families.map((family, index) => (
-              <tr key={index} onClick={() => { }} role="button">
-                <td>{family.name}</td>
-                <td>
-                  <ul>
-                    {family.members.map((member, memberIndex) => (
-                      <li>{member.firstName + " " + member.lastName}</li>
-                    ))
-                    }
-                  </ul>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ul className="list-of-tables">
+          {families.map((family, index) => (
+            <li>
+              <p>{family.name}</p>
+              <table>
+                <thead>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                </thead>
+                <tbody>
+                  {family.members.map((member, memberIndex) => (
+                    <tr key={memberIndex} onClick={() => { }} role="button">
+                      <td>{member.firstName + " " + member.lastName}</td>
+                      <td>{member.email}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </li>
+          ))}
+        </ul >
       )}
     </>
   );
