@@ -5,7 +5,7 @@ const Families: React.FC = () => {
     return (
         <>
             <Head>
-                <title>My Families</title>
+                <title>My Families | FreshTrack</title>
             </Head>
             <Header />
             {/* <main className="d-flex flex-column justify-content-center align-items-center">
