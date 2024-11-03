@@ -16,6 +16,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <Header />
+      <main>
+        <h1>FreshTrack Home</h1>
+      </main>
     </>
   );
 }
