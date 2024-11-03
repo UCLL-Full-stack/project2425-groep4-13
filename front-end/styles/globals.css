@@ -1,0 +1,48 @@
+:root {
+  background-color: whitesmoke;
+}
+
+body {
+  margin: 0px;
+}
+
+main {
+  padding: 1em;
+}
+
+h1 {
+  color: forestgreen;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+nav {
+  background-color: forestgreen;
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}
+
+nav a {
+  color: white;
+  font-size: 2em;
+  text-decoration: none;
+  font-family:monospace;
+  font-weight: bold;
+  padding: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  background-color: darkgreen;
+  border-radius: 1em;
+}
+
+table {
+  padding: 0.5em;
+  border: forestgreen 0.2em solid;
+  border-radius: 0.25em;
+}
+
+table td {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
