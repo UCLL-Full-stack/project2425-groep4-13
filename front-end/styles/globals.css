@@ -1,4 +1,9 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
 /* GENERAL */
+
 :root {
   background-color: whitesmoke;
 }
@@ -11,60 +16,184 @@ main {
   padding: 1em;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4 {
   color: forestgreen;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* NAV */
+
 nav {
-  background-color: forestgreen;
+  background-color: rgb(231, 231, 231);
   display: flex;
   justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 1em;
+  box-shadow: 0 4px 6px rgba(48, 48, 48, 0.2);
 }
 
 nav a {
-  color: white;
-  font-size: 2em;
+  color: forestgreen;
+  font-size: 1.8em;
   text-decoration: none;
-  font-family:monospace;
-  font-weight: bold;
-  padding: 0.5em;
+  font-family: monospace;
+  font-weight: bolder;
+  padding: 0.4em;
   margin-left: 0.5em;
   margin-right: 0.5em;
-  background-color: darkgreen;
   border-radius: 1em;
 }
 
+nav a:hover {
+  background-color: lightgray;
+  transition-duration: 0.6s;
+}
+
+nav .current {
+  text-decoration: underline solid forestgreen 0.1em;
+}
+
+/* BUTTON TYPES */
+.rounded-outline-button {
+  border-radius: 100em;
+  border: solid forestgreen 0.1em;
+}
+
+.icon-button {
+  background-color: rgb(255, 71, 71);
+  border: none;
+  color: whitesmoke;
+  padding: 0.5em;
+  font-weight: bold;
+  font-size: large;
+  height: 100%;
+  aspect-ratio: 1;
+  width: auto;
+}
+.icon-button:hover {
+  background-color: rgb(255, 119, 119);
+  transition-duration: 0.3s;
+}
+
+/* TEXT */
+p {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
 /* TABLES */
+
 .list-of-tables {
   list-style-type: none;
   padding: 0px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .list-of-tables li {
-  border: forestgreen 0.2em solid;
+  background-color: rgb(231, 231, 231);
+  border: lightgray 0.2em solid;
   border-radius: 0.25em;
-  padding: 0.5em;
   margin-bottom: 1em;
+  box-shadow: 0 4px 6px rgba(48, 48, 48, 0.2);
 }
 
-.list-of-tables p {
+.collapsible-header {
+  color: whitesmoke;
+  background-color: forestgreen;
   font-weight: bold;
+  width: 100%;
   margin: 0px;
   padding: 0.5em;
+  border: none;
+  text-align: left;
+  font-size: large;
+}
+
+.collapsible.collapsed .collapsible-header {
+  border-radius: 0.25em; /* als gecollapsed dan aan alle kanten border radius */
+}
+.collapsible.expanded .collapsible-header {
+  border-radius: 0.25em 0.25em 0em 0em;
+}
+
+.collapsible-header:after {
+  font-weight: bold;
+  font-size: large;
+  float: right;
+  margin-right: 0.25em;
+  color: whitesmoke;
+}
+.collapsible.collapsed .collapsible-header:after {
+  content: "+";
+}
+.collapsible.expanded .collapsible-header:after {
+  content: "-";
+}
+
+.collapsible.collapsed table {
+  display: none;
+}
+
+.collapsible-header:hover {
+  background-color: rgb(68, 185, 68);
+  transition-duration: 0.1s;
 }
 
 .list-of-tables table {
   width: 100%;
   padding: 0.5em;
-  border: solid forestgreen 0.1em;
-  border-radius: 0.25em;
 }
 
-.list-of-tables th {
-  padding: 0%;
+.list-of-tables table tr {
+  border: none;
+  border-bottom: 5px black solid;
+  margin: 0%;
+}
+
+/* FORMS */
+.login-form {
+  background-color: rgb(231, 231, 231);
+  border: lightgray 0.2em solid;
+  border-radius: 0.25em;
+  box-shadow: 0 4px 6px rgba(48, 48, 48, 0.2);
+  padding: 1em;
+  text-align: center;
+}
+
+.login-form div {
+  margin: 0.5em;
+}
+.login-form label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: forestgreen;
+}
+
+.login-form input {
+  border: solid 0.1em forestgreen;
+  padding: 0.5em;
+  border-radius: 0.4em;
+}
+
+.login-form button {
+  margin-top: 1em;
+  padding: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: forestgreen;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 1.25em;
+  color: whitesmoke;
+  border-radius: 100em;
+  border: none;
+}
+
+.login-form button:hover {
+  background-color: rgb(68, 185, 68);
+  transition-duration: 0.1s;
 }

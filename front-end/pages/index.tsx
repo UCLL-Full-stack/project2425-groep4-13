@@ -15,7 +15,103 @@ export default function Home() {
       </Head>
       <Header />
       <main>
-        <h1>FreshTrack Home</h1>
+        <h1 className="text-3xl font-bold underline">FreshTrack Home</h1>
+
+        {/* gewoon enkele dingen voor styling, van zodra die op andere plekken gebruikt worden mogen ze weg*/}
+        <div>
+          <h2>Styling Voorbeelden</h2>
+          <h3 className="text-red-600">Tekst voorbeelden</h3>
+          <div>
+            <h4>Titel</h4>
+            <p>Gewone tekst</p>
+          </div>
+
+          <h3>Tabel voorbeelden</h3>
+          <div>
+            <ul className="list-of-tables">
+              <li className="collapsible expanded">
+                <button className="collapsible-header">Table 1</button>
+                <table>
+                  <thead>
+                    <th>Kolom 1</th>
+                    <th>Kolom 2</th>
+                    <th>Kolom met knoppen</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>abc</td>
+                      <td>hey!</td>
+                      <td><button className="icon-button">a</button></td>
+                    </tr>
+                    <tr>
+                      <td>123</td>
+                      <td>bye!</td>
+                      <td><button className="icon-button">a</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </li>
+              <li className="collapsible collapsed">
+                <button className="collapsible-header">Table 2</button>
+                <table>
+                  <thead>
+                    <th>Kolom 1</th>
+                    <th>Kolom 2</th>
+                    <th>Kolom met knoppen</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>abc</td>
+                      <td>hey!</td>
+                      <td><button className="icon-button">test</button></td>
+                    </tr>
+                    <tr>
+                      <td>123</td>
+                      <td>bye!</td>
+                      <td><button className="icon-button">test</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </li>
+            </ul>
+
+          </div>
+
+          <h3>Formulier vorbeeld</h3>
+          <div className="login-form">
+            <form>
+              <label htmlFor="nameInput">
+                Username
+              </label>
+              <div>
+                <input
+                  id="nameInput"
+                  type="text"
+                />
+              </div>
+              <div>
+                <div>
+                  <label
+                    htmlFor="passwordInput"
+                  >
+                    Password
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="password"
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+              >
+                Log in
+              </button>
+            </form>
+          </div>
+
+        </div>
       </main>
     </>
   );

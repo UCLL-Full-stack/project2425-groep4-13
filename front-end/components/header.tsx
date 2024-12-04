@@ -9,11 +9,17 @@ const Header: React.FC = () => {
                 Courses App
             </a> */}
             <nav className="nav justify-content-center">
-                <Link href="/" className="nav-link px-4 fs-5 text-white">
+                <Link href="/" className="current nav-link px-4 fs-5 text-white">
                     HOME
                 </Link>
                 <Link href="/families" className="nav-link px-4 fs-5 text-white">
                     MY FAMILIES
+                </Link>
+                <Link href="" className="rounded-outline-button">
+                    LOG IN
+                </Link>
+                <Link href="" className="rounded-outline-button">
+                    VOORBEELD
                 </Link>
             </nav>
         </header>
