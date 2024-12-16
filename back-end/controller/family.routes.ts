@@ -121,4 +121,8 @@ familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
     }
 });
 
+// er moet een functie om een member toe te voegen
+// die functie moet ook de user "Role" op "Pending" zetten
+// by default moet de user role veld == null zijn
+
 export { familyRouter };

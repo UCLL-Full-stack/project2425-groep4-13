@@ -1,4 +1,5 @@
 import FamiliesOverviewTable from "@/components/families/FamiliesOverviewTable";
+import FamiliesSearchBar from "@/components/families/FamiliesSearchBar";
 import FamilySignup from "@/components/families/FamilySignup";
 import RegisterFamilyWindow from "@/components/families/RegisterFamilyWindow";
 import Header from "@/components/header";
@@ -19,16 +20,21 @@ const Families: React.FC = () => {
     }
 
     // functies om de currentStep aan te passen via andere components (dus die worden doorgegeven als callbacks)
-    const handleFamilyRegistered = () => { setCurrentStep("InFamily"); } // als user een nieuwe family heeft geregisterd
     const showFamilyRegisterWindow = () => { setCurrentStep("RegisterNewFamily") } // als user optie "register new family" kiest
+    const handleFamilyRegistered = () => { setCurrentStep("InFamily"); } // als user een nieuwe family heeft geregisterd
+
     const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily") } // als user optie "join existing family" kiest
+    const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval") } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
 
     useEffect(() => {
+        console.log("this running");
         getFamily();
 
         // als user al een familie heeft, dan zijn alle stappen gedaan
         if (family !== null) {
-            setCurrentStep("InFamily")
+            // hier checken of user status "===" pending, dan zit die nog niet echt helemaal in de familie
+            setCurrentStep("PendingFamilyApproval")
+            // setCurrentStep("InFamily")
         } else {
             setCurrentStep("FamilySignup")
         }
@@ -52,7 +58,11 @@ const Families: React.FC = () => {
                 }
 
                 {
-                    currentStep === "JoinExistingFamily" && 
+                    currentStep === "JoinExistingFamily" && <FamiliesSearchBar handleRequestedFamilyJoin={handleRequestedFamilyJoin} />
+                }
+
+                {
+                    currentStep === "PendingFamilyApproval" && <p>Please wait until the family owner accepts your request to join their family. Refresh the page to check again.</p>
                 }
 
                 {/* <div className="centered">

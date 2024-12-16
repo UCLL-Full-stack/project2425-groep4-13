@@ -11,7 +11,7 @@ const RegisterFamilyWindow: React.FC<Props> = ({ handleFamilyRegistered }: Props
     const [error, setError] = useState<string | null>(null);
     const [familyName, setFamilyName] = useState<string>();
 
-    const validate = () => {
+    const validate = async () => {
         let result = true;
         setError(null);
 
@@ -27,6 +27,14 @@ const RegisterFamilyWindow: React.FC<Props> = ({ handleFamilyRegistered }: Props
         event.preventDefault();
 
         if (!validate()) {
+            return;
+        }
+
+        // checken of die family niet al bestaat (is ook validatie maar hoeft niet voor elk karakter te runnen)
+        const existingFamilyResponse = await FamilyService.getFamilyByName(familyName || "thiswillneverbeneeded"); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
+
+        if (existingFamilyResponse.status === 200) { // als er een familie is gevonden met die naam
+            setError("Family with this name already exists.");
             return;
         }
 

@@ -12,6 +12,18 @@ const getFamilyByMemberEmail = async (memberEmail: string) => {
       );
 }
 
+const getFamilyByName = async (familyName: string) => {
+  return await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/family/${familyName}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
+
 const createFamily = (family: Family) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
       method: "POST",
@@ -26,6 +38,7 @@ const createFamily = (family: Family) => {
 const FamilyService = {
   getFamilyByMemberEmail,
     createFamily,
+    getFamilyByName,
 }
 
 export default FamilyService;
