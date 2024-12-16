@@ -78,8 +78,19 @@ const getFamiliesByMember = (email: string): Family[] => {
     }
 };
 
+const createFamily = (family: Family): Family => {
+    try {
+        families.push(family);
+        return family;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
 export default {
     getAllFamilies,
     getFamilyByName,
     getFamiliesByMember,
+    createFamily,
 };

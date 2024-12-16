@@ -14,11 +14,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <Header />
-      <main>
+      <main className="bg-black">
         <h1 className="text-3xl font-bold underline">FreshTrack Home</h1>
 
         {/* gewoon enkele dingen voor styling, van zodra die op andere plekken gebruikt worden mogen ze weg*/}
-        <div>
+        {/* <div>
           <h2>Styling Voorbeelden</h2>
           <h3 className="text-red-600">Tekst voorbeelden</h3>
           <div>
@@ -111,7 +111,7 @@ export default function Home() {
             </form>
           </div>
 
-        </div>
+        </div> */}
       </main>
     </>
   );

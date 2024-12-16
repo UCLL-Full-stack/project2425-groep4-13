@@ -26,6 +26,7 @@
 
 import express, { NextFunction, Request, Response } from 'express';
 import familyService from '../service/family.service';
+import { FamilyInput } from '../types';
 
 const familyRouter = express.Router();
 
@@ -105,6 +106,16 @@ familyRouter.get('/:name', (req: Request, res: Response, next: NextFunction) => 
 familyRouter.get('/member/:memberEmail', (req: Request, res: Response, next: NextFunction) => {
     try {
         res.status(200).json(familyService.getFamiliesByMember(req.params.memberEmail));
+    } catch (error) {
+        next(error);
+    }
+});
+
+familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const familyInput: FamilyInput = req.body;
+        const family = await familyService.createFamily(familyInput);
+        res.status(201).json(family);
     } catch (error) {
         next(error);
     }

@@ -1,6 +1,7 @@
 import { User } from "../model/user";
 import { Family } from "../model/family";
 import familyDb from "../repository/family.db";
+import { FamilyInput } from "../types";
 
 
 const getAllFamilies = (): Family[] => familyDb.getAllFamilies();
@@ -17,9 +18,36 @@ const getFamiliesByMember = (memberEmail: string): Family[] => {
     return families;
 }
 
+const createFamily = ({
+    name,
+    members,
+}: FamilyInput): Family => {
+    const existingFamily = familyDb.getFamilyByName(name);
+    if (existingFamily) throw new Error(`Family with name ${name} already exists.`);
+
+
+    // lijst van Users maken uit de lijst met UserInputs
+    const membersAsUsers = members.map(member => 
+        new User({
+            email: member.email,
+            firstName: member.firstName,
+            lastName: member.lastName,
+            password: member.password,
+        })
+    );
+
+    const family = new Family({
+        name,
+        members: membersAsUsers,
+    });
+
+    return familyDb.createFamily(family);
+};
+
 export default {
     getAllFamilies,
     getFamilyByName,
-    getFamiliesByMember
+    getFamiliesByMember,
+    createFamily,
 };
 
