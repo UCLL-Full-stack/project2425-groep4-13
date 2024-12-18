@@ -14,9 +14,9 @@ const Families: React.FC = () => {
 
     const getFamily = async () => {
         const response = await FamilyService.getFamilyByMemberEmail("john.doe@ucll.be");
-        const json = await response.json();
+        const json: Family = await response.json();
         setFamily(json);
-        localStorage.setItem("Family", JSON.stringify({ family }));
+        localStorage.setItem("Family", JSON.stringify(json.name));
     }
 
     // functies om de currentStep aan te passen via andere components (dus die worden doorgegeven als callbacks)
@@ -26,10 +26,15 @@ const Families: React.FC = () => {
     const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily") } // als user optie "join existing family" kiest
     const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval") } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
 
+    // use effect die moet runnen wanneer de pagina voor het eerst geopend wordt
+    // moet zo met 2 aparte useEffects want setFamily gebeurt niet instant, maar die variabele is wel nodig om de pagina te renderen
     useEffect(() => {
         console.log("this running");
         getFamily();
+    }, []);
 
+    // use effect die update als de "family" state variabele verandert, dus nadat die wordt gefetched
+    useEffect(() => {
         // als user al een familie heeft, dan zijn alle stappen gedaan
         if (family !== null) {
             // hier checken of user status "===" pending, dan zit die nog niet echt helemaal in de familie
@@ -38,7 +43,7 @@ const Families: React.FC = () => {
         } else {
             setCurrentStep("FamilySignup")
         }
-    }, []);
+    }, [family]);
 
     return (
         <>

@@ -14,10 +14,10 @@ const getFamilyByName = (name: string): Family | null => {
     return family;
 };
 
-const getFamiliesByMember = (memberEmail: string): Family[] => {
-    const families = familyDb.getFamiliesByMember(memberEmail);
-    if (!families || families.length == 0) throw new Error(`No families found for member ${memberEmail}.`);
-    return families;
+const getFamilyByMember = (memberEmail: string): Family => {
+    const family = familyDb.getFamilyByMember(memberEmail);
+    if (!family) throw new Error(`No family found for member ${memberEmail}.`);
+    return family;
 }
 
 const createFamily = ({
@@ -54,7 +54,7 @@ const addMemberToFamily = async (
     //TODO aanpassen naar id
     if (!familyInput.name) throw new Error("Family name is required.");
     // if (!familyInput.id) throw new Error("Family id is required.");
-    if (!userInput.email) throw new Error("User id is requird.");
+    if (!userInput.email) throw new Error("User email is requird.");
 
     //TODO aanpassen naar id
     const family = await familyDb.getFamilyByName(familyInput.name); // juiste family fetchen
@@ -76,7 +76,7 @@ const addMemberToFamily = async (
 export default {
     getAllFamilies,
     getFamilyByName,
-    getFamiliesByMember,
+    getFamilyByMember,
     createFamily,
     addMemberToFamily,
 };

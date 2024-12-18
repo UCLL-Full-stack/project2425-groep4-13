@@ -102,29 +102,29 @@ test("given: family not in database, when: get family by name, then: throw error
     expect(getFamilyByNameMock).toHaveBeenCalledTimes(1);
 });
 
-test("given: family in database, when: get families by member, then: return families", () => {
+test("given: family in database, when: get family by member, then: return family", () => {
     //given
-    getFamilyByMemberMock.mockReturnValue([family]);
-    familyDb.getFamiliesByMember = getFamilyByMemberMock;
+    getFamilyByMemberMock.mockReturnValue(family);
+    familyDb.getFamilyByMember = getFamilyByMemberMock;
 
     //when
-    const familiesByMember = familyService.getFamiliesByMember(userInput1.email);
+    const familiesByMember = familyService.getFamilyByMember(userInput1.email);
 
     //then
-    expect(familiesByMember).toEqual([family]);
+    expect(familiesByMember).toEqual(family);
     expect(getFamilyByMemberMock).toHaveBeenCalledTimes(1);
 });
 
-test("given: family not in database, when: get families by member, then: throw error", () => {
+test("given: family not in database, when: get family by member, then: throw error", () => {
     //given
-    getFamilyByMemberMock.mockReturnValue([]);
-    familyDb.getFamiliesByMember = getFamilyByMemberMock;
+    getFamilyByMemberMock.mockReturnValue(null);
+    familyDb.getFamilyByMember = getFamilyByMemberMock;
 
     //when
-    const getFamiliesByMember = () => familyService.getFamiliesByMember(userInput1.email);
+    const getFamiliesByMember = () => familyService.getFamilyByMember(userInput1.email);
 
     //then
-    expect(getFamiliesByMember).toThrow(`No families found for member ${userInput1.email}.`);
+    expect(getFamiliesByMember).toThrow(`No family found for member ${userInput1.email}.`);
     expect(getFamilyByMemberMock).toHaveBeenCalledTimes(1);
 });
 

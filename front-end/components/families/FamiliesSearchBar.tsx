@@ -1,6 +1,7 @@
 // om te zoeken naar bestaande families om er een te joinen
 
 import FamilyService from '@/services/FamilyService';
+import { Family } from '@/types';
 import React, { useState } from 'react';
 
 
@@ -42,15 +43,35 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
             return;
         }
 
+        let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+        loggedInUserEmail = "michael@jackson.be";
+        if (!loggedInUserEmail) { // voor de zekerheid checken dat die bestaat
+            setError("No user is logged in");
+            return;
+        }
+
+        console.log("step1");
+
+
         const response = await FamilyService.getFamilyByName(currentSearchTerm || "thiswillneverbeneeded");
         if (response.status === 200) {
-            const family = await response.json();
+            console.log("step2");
+
+            const family: Family = await response.json();
+
+            const pushResponse = await FamilyService.addUserToFamily(family, loggedInUserEmail);
+            if (pushResponse.status === 200) {
+                localStorage.setItem("Family", family.name);
+
+                handleRequestedFamilyJoin();
+                console.log("YUP");
+            } else {
+                setError("Something went wrong while adding user to family");
+            }
         } else {
             setError("Something went wrong fetching families");
             return;
         }
-
-        handleRequestedFamilyJoin();
     }
 
     return (

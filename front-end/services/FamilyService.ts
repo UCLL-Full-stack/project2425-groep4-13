@@ -1,4 +1,4 @@
-import { Family } from "@/types";
+import { Family, User } from "@/types";
 
 const getFamilyByMemberEmail = async (memberEmail: string) => {
     return await fetch(
@@ -35,10 +35,25 @@ const createFamily = (family: Family) => {
   });
 };
 
+const addUserToFamily = (family: Family, userEmail: string) => {
+  return fetch(process.env.NEXT_PUBLIC_API_URL + "/family/member", {
+    method: "POST",
+
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        family: family,
+        user: {email: userEmail}, // er een object van maken, want back-end verwacht een UserInput object (maar niet alle velden zijn nodig)
+    }),
+  });
+}
+
 const FamilyService = {
   getFamilyByMemberEmail,
     createFamily,
     getFamilyByName,
+    addUserToFamily,
 }
 
 export default FamilyService;
