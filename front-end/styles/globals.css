@@ -74,6 +74,7 @@ nav .current {
   aspect-ratio: 1;
   width: auto;
 }
+
 .icon-button:hover {
   background-color: rgb(255, 119, 119);
   transition-duration: 0.3s;
@@ -133,8 +134,10 @@ p {
 }
 
 .collapsible.collapsed .collapsible-header {
-  border-radius: 0.25em; /* als gecollapsed dan aan alle kanten border radius */
+  border-radius: 0.25em;
+  /* als gecollapsed dan aan alle kanten border radius */
 }
+
 .collapsible.expanded .collapsible-header {
   border-radius: 0.25em 0.25em 0em 0em;
 }
@@ -146,9 +149,11 @@ p {
   margin-right: 0.25em;
   color: whitesmoke;
 }
+
 .collapsible.collapsed .collapsible-header:after {
   content: "+";
 }
+
 .collapsible.expanded .collapsible-header:after {
   content: "-";
 }
@@ -186,6 +191,7 @@ p {
 .login-form div {
   margin: 0.5em;
 }
+
 .login-form label {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.2em;
@@ -216,8 +222,8 @@ p {
 .login-form button:hover {
   background-color: rgb(68, 185, 68);
   transition-duration: 0.1s;
-}
 
 .form-error {
   color: red;
 }
+
