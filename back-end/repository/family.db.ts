@@ -29,12 +29,12 @@ const families = [
     new Family({
         name: "Smith",
         members: [
-            new User({
-                email: "john.doe@ucll.be",
-                firstName: "John",
-                lastName: "Doe",
-                password: "Secret123",
-            }),
+            // new User({
+            //     email: "john.doe@ucll.be",
+            //     firstName: "John",
+            //     lastName: "Doe",
+            //     password: "Secret123",
+            // }),
             new User({
                 email: "jane.smith@ucll.be",
                 firstName: "Jane",
@@ -69,9 +69,19 @@ const getFamilyByName = (name: string): Family | null => {
     }
 };
 
-const getFamiliesByMember = (email: string): Family[] => {
+const getFamilyByMember = (email: string): Family => {
     try {
-        return families.filter((family) => family.getMembers().some((member) => member.getEmail() === email));
+        return families.filter((family) => family.getMembers().some((member) => member.getEmail() === email))[0];
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
+const createFamily = (family: Family): Family => {
+    try {
+        families.push(family);
+        return family;
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
@@ -81,5 +91,6 @@ const getFamiliesByMember = (email: string): Family[] => {
 export default {
     getAllFamilies,
     getFamilyByName,
-    getFamiliesByMember,
+    getFamilyByMember,
+    createFamily,
 };

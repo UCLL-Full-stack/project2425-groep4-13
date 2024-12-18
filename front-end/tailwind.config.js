@@ -2,7 +2,7 @@
 module.exports = {
   content: [ // zoals in labos
     './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/index.tsx',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
 
     // Or if using `src` directory:

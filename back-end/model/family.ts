@@ -1,17 +1,24 @@
 import { User } from "./user";
 
 export class Family {
+    private id?: number;
     private name: string;
     private members: User[];
 
     constructor(family: {
+        id?: number;
         name: string;
         members: User[];
     }) {
         this.validate(family);
 
+        this.id = family.id;
         this.name = family.name;
         this.members = family.members;
+    }
+
+    getId(): number | undefined {
+        return this.id;
     }
 
     getName(): string {
@@ -20,6 +27,17 @@ export class Family {
 
     getMembers(): User[] {
         return this.members;
+    }
+
+    addMemberToFamily(member: User): User {
+        if (!member) throw new Error('Member is required');
+        if (this.members.includes(member)) {
+            throw new Error('Member is already part of this family');
+        }
+
+        this.members.push(member);
+
+        return member
     }
 
     validate(family: {
