@@ -15,11 +15,11 @@ const Header: React.FC = () => {
                 <Link href="/families" className="nav-link px-4 fs-5 text-white">
                     MY FAMILIES
                 </Link>
-                <Link href="" className="rounded-outline-button">
+                <Link href="/login" className="rounded-outline-button">
                     LOG IN
                 </Link>
-                <Link href="" className="rounded-outline-button">
-                    VOORBEELD
+                <Link href="/register" className="rounded-outline-button">
+                    Register
                 </Link>
             </nav>
         </header>

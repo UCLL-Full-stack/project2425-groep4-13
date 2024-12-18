@@ -10,4 +10,10 @@ type FamilyInput = {
     members: UserInput[];
 };
 
-export { UserInput, FamilyInput };
+type AuthenticationResponse = {
+    token: string;
+    email: string;
+    fullname: string;
+};
+
+export { UserInput, FamilyInput, AuthenticationResponse };

@@ -9,3 +9,8 @@ export type User = {
     lastName: string,
     password: string,
 };
+
+export type StatusMessage = {
+    message: string;
+    type: "error" | "success";
+};

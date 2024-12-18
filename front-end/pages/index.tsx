@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Header from "@/components/header";
+import Header from "@components/header";
 
 export default function Home() {
   return (
@@ -33,9 +33,11 @@ export default function Home() {
                 <button className="collapsible-header">Table 1</button>
                 <table>
                   <thead>
-                    <th>Kolom 1</th>
-                    <th>Kolom 2</th>
-                    <th>Kolom met knoppen</th>
+                    <tr>
+                      <th>Kolom 1</th>
+                      <th>Kolom 2</th>
+                      <th>Kolom met knoppen</th>
+                    </tr>
                   </thead>
                   <tbody>
                     <tr>
@@ -55,9 +57,11 @@ export default function Home() {
                 <button className="collapsible-header">Table 2</button>
                 <table>
                   <thead>
-                    <th>Kolom 1</th>
-                    <th>Kolom 2</th>
-                    <th>Kolom met knoppen</th>
+                    <tr>
+                      <th>Kolom 1</th>
+                      <th>Kolom 2</th>
+                      <th>Kolom met knoppen</th>
+                    </tr>
                   </thead>
                   <tbody>
                     <tr>
