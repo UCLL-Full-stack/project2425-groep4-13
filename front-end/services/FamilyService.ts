@@ -1,4 +1,4 @@
-import { Family, User } from "@/types";
+import { Family, User } from "@types";
 
 const getFamilyByMemberEmail = async (memberEmail: string) => {
     return await fetch(
