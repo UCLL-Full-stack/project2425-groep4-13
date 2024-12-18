@@ -49,9 +49,9 @@
  *              user:
  *                  type: object
  *                  properties:
- *                      id:
- *                          type: number
- *                          format: int64
+ *                      email:
+ *                          type: string
+ *                          description: The user's email.
  */
 
 import express, { NextFunction, Request, Response } from 'express';

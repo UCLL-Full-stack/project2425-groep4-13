@@ -2,6 +2,8 @@ import { User } from "../model/user";
 import { Family } from "../model/family";
 import familyDb from "../repository/family.db";
 import { FamilyInput, UserInput } from "../types";
+import userDb from "../repository/user.db";
+import { memoryUsage } from "process";
 
 
 const getAllFamilies = (): Family[] => familyDb.getAllFamilies();
@@ -49,15 +51,20 @@ const addMemberToFamily = async (
     {family: familyInput, user: userInput, }:
     {family: FamilyInput; user: UserInput; }
 ): Promise<User | null> => {
-    const family = await familyDb.getFamilyByName(familyInput.name);
+    // if (!familyInput.id) throw new Error("Family id is required.");
+    if (!userInput.email) throw new Error("User id is requird.");
 
-    if(!family) {
-        throw new Error("Family not found");
-    }
+    // const family = await familyDb.getFamilyById(familyInput.id); // juiste family fetchen
 
-    const user = new User(userInput); // DTO omzetten naar domeinobject
+    const user = await userDb.getUserByEmail(userInput.email); // juiste user fetchen
 
-    return family.addMemberToFamily(user);
+
+    // if(!family) {
+    //     throw new Error("Family not found");
+    // }
+    // return family.addMemberToFamily(user);
+
+    return user;
 }
 
 export default {
