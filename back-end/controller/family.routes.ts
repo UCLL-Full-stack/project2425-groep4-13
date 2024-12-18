@@ -43,9 +43,9 @@
  *              family:
  *                  type: object
  *                  properties:
- *                      id:
- *                          type: number
- *                          format: int64
+ *                      name:
+ *                          type: string
+ *                          description: The family name.
  *              user:
  *                  type: object
  *                  properties:
