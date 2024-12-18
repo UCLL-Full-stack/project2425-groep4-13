@@ -22,6 +22,36 @@
  *              type: array
  *              items:
  *                 $ref: '#/components/schemas/UserInput'
+ *      UserInput:
+ *          type: object
+ *          properties:
+ *            email:
+ *              type: string
+ *              description: The user's email.
+ *            firstName:
+ *              type: string
+ *              description: The user's first name.
+ *            lastName:
+ *              type: string
+ *              description: The user's last name.
+ *            password:
+ *              type: string
+ *              description: The user's password.
+ *      JoinFamilyInput:
+ *          type: object
+ *          properties:
+ *              family:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: number
+ *                          format: int64
+ *              user:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: number
+ *                          format: int64
  */
 
 import express, { NextFunction, Request, Response } from 'express';
@@ -124,7 +154,7 @@ familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
 
 /**
  * @swagger
- * /schedules:
+ * /family/member:
  *  post:
  *      security:
  *          - bearerAuth: []
@@ -134,12 +164,7 @@ familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
  *          content:
  *              application/json:
  *                  schema:
- *                      type: object
- *                      properties:
- *                          family:
- *                              $ref: '#/components/schemas/FamilyInput'
- *                          user:
- *                              $ref: '#/components/schemas/UserInput'
+ *                     $ref: '#/components/schemas/JoinFamilyInput'
  *      responses:
  *          200:
  *              description: The user got added to the family as a pending member.

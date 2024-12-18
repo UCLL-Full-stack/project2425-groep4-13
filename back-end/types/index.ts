@@ -10,4 +10,10 @@ type FamilyInput = {
     members: UserInput[];
 };
 
-export { UserInput, FamilyInput };
+// DTO voor als een user een family wil joinen
+type JoinFamilyInput = {
+    family: FamilyInput;
+    user: UserInput;
+}
+
+export { UserInput, FamilyInput, JoinFamilyInput };
