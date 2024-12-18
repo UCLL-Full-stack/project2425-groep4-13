@@ -81,7 +81,7 @@ export default function Home() {
 
           </div>
 
-          <h3>Formulier vorbeeld</h3>
+          <h3>Formulier voorbeeld</h3>
           <div className="login-form">
             <form>
               <label htmlFor="nameInput">
