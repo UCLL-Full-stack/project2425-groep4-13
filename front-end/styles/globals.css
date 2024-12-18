@@ -80,6 +80,26 @@ nav .current {
   transition-duration: 0.3s;
 }
 
+.colored-button {
+  background-color: forestgreen;
+  color: whitesmoke;
+  padding: 0.75em;
+  border: none;
+  border-radius: 0.25em;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.colored-button:hover {
+  background-color: rgb(85, 168, 85);
+  transition-duration: 0.3s;
+}
+
+.centered {
+  width: 100%;
+  text-align: center;
+}
+
 /* TEXT */
 p {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -202,4 +222,8 @@ p {
 .login-form button:hover {
   background-color: rgb(68, 185, 68);
   transition-duration: 0.1s;
+
+.form-error {
+  color: red;
 }
+

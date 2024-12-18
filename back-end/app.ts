@@ -8,7 +8,12 @@ import { userRouter } from './controller/user.routes';
 import { familyRouter } from './controller/family.routes';
 import { expressjwt } from 'express-jwt';
 
+import helmet from 'helmet';
+
+
 const app = express();
+// app.use(helmet());
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 
@@ -36,6 +41,7 @@ const swaggerOpts = {
 const swaggerSpec = swaggerJSDoc(swaggerOpts);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ status: 'unauthorized', message: err.message });
@@ -45,6 +51,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         res.status(400).json({ status: 'application error', message: err.message });
     }
 });
+
 
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);

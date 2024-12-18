@@ -21,11 +21,47 @@
  *            members:
  *              type: array
  *              items:
- *                 $ref: '#/components/schemas/UserInput'
+ *                  type: object
+ *                  properties:
+ *                      email:
+ *                          type: string
+ *                          description: The user's email.
+ *      UserInput:
+ *          type: object
+ *          properties:
+ *            email:
+ *              type: string
+ *              description: The user's email.
+ *            firstName:
+ *              type: string
+ *              description: The user's first name.
+ *            lastName:
+ *              type: string
+ *              description: The user's last name.
+ *            password:
+ *              type: string
+ *              description: The user's password.
+ *      JoinFamilyInput:
+ *          type: object
+ *          properties:
+ *              family:
+ *                  type: object
+ *                  properties:
+ *                      name:
+ *                          type: string
+ *                          description: The family name.
+ *              user:
+ *                  type: object
+ *                  properties:
+ *                      email:
+ *                          type: string
+ *                          description: The user's email.
  */
 
 import express, { NextFunction, Request, Response } from 'express';
 import familyService from '../service/family.service';
+import { FamilyInput, JoinFamilyInput, UserInput } from '../types';
+import userService from '../service/user.service';
 
 const familyRouter = express.Router();
 
@@ -98,13 +134,86 @@ familyRouter.get('/:name', (req: Request, res: Response, next: NextFunction) => 
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Family'
+ *               $ref: '#/components/schemas/Family'
  */
 familyRouter.get('/member/:memberEmail', (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).json(familyService.getFamiliesByMember(req.params.memberEmail));
+        res.status(200).json(familyService.getFamilyByMember(req.params.memberEmail));
+    } catch (error) {
+        next(error);
+    }
+});
+
+
+/**
+ * @swagger
+ * /family:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Create a new family.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/FamilyInput'
+ *      responses:
+ *          200:
+ *              description: The newly created family.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Family'
+ */
+familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const familyInput = <FamilyInput>req.body;
+        const family = await familyService.createFamily(familyInput);
+        res.status(200).json(family);
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * @swagger
+ * /family/member:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Add an existing member to an existing family.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                     $ref: '#/components/schemas/JoinFamilyInput'
+ *      responses:
+ *          200:
+ *              description: The user got added to the family as a pending member.
+ *              content:
+ *                  application.json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/User'
+ *              
+ */
+familyRouter.post('/member', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const joinFamilyInput = <JoinFamilyInput>req.body;
+        // const {family, user} = req.body as {family: FamilyInput; user: UserInput} // de parameters ophalen en naar juiste DTO type casten
+
+        console.log("test");    
+        console.log("input");
+        console.log(joinFamilyInput);
+        // console.log(joinFamilyInput.family);
+        // console.log(joinFamilyInput.user);
+
+        // TODO de user moet nog zijn role op "pending" gezet krijgen ook!
+        // want default is null en front-end geeft dat gwn zo door en kan dat niet zelf wijzigen
+
+        const result = await familyService.addMemberToFamily({family: joinFamilyInput.family, user: joinFamilyInput.user}); // die nieuwe user wordt gewoon als member toegevoegd, maar de "role" van de user is nog "pending"
+        res.status(200).json(result);
     } catch (error) {
         next(error);
     }
