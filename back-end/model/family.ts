@@ -29,6 +29,17 @@ export class Family {
         return this.members;
     }
 
+    addMemberToFamily(member: User): User {
+        if (!member) throw new Error('Member is required');
+        if (this.members.includes(member)) {
+            throw new Error('Member is already part of this family');
+        }
+
+        this.members.push(member);
+
+        return member
+    }
+
     validate(family: {
         name: string;
         members: User[];

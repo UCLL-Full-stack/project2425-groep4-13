@@ -26,7 +26,8 @@
 
 import express, { NextFunction, Request, Response } from 'express';
 import familyService from '../service/family.service';
-import { FamilyInput } from '../types';
+import { FamilyInput, UserInput } from '../types';
+import userService from '../service/user.service';
 
 const familyRouter = express.Router();
 
@@ -121,8 +122,45 @@ familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
     }
 });
 
-// er moet een functie om een member toe te voegen
-// die functie moet ook de user "Role" op "Pending" zetten
-// by default moet de user role veld == null zijn
+/**
+ * @swagger
+ * /schedules:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Add an existing member to an existing family.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          family:
+ *                              $ref: '#/components/schemas/FamilyInput'
+ *                          user:
+ *                              $ref: '#/components/schemas/UserInput'
+ *      responses:
+ *          200:
+ *              description: The user got added to the family as a pending member.
+ *              content:
+ *                  application.json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/User'
+ *              
+ */
+familyRouter.post('/member', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {family, user} = req.body as {family: FamilyInput; user: UserInput} // de parameters ophalen en naar juiste DTO type casten
+
+        // TODO de user moet nog zijn role op "pending" gezet krijgen ook!
+        // want default is null en front-end geeft dat gwn zo door en kan dat niet zelf wijzigen
+
+        const result = await familyService.addMemberToFamily({family: family, user: user}); // die nieuwe user wordt gewoon als member toegevoegd, maar de "role" van de user is nog "pending"
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+});
 
 export { familyRouter };
