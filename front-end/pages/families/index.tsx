@@ -1,7 +1,7 @@
-import FamiliesOverviewTable from "@/components/families/FamiliesOverviewTable";
-import Header from "@/components/header";
-import FamilyService from "@/services/FamilyService";
-import { Family } from "@/types";
+import FamiliesOverviewTable from "@components/families/FamiliesOverviewTable";
+import Header from "@components/header";
+import FamilyService from "@services/FamilyService";
+import { Family } from "@types";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
