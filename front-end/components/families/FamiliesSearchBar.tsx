@@ -44,7 +44,7 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
         }
 
         let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
-        loggedInUserEmail = "michael@jackson.be";
+        loggedInUserEmail = "mike.doe@ucll.be";
         if (!loggedInUserEmail) { // voor de zekerheid checken dat die bestaat
             setError("No user is logged in");
             return;

@@ -21,7 +21,11 @@
  *            members:
  *              type: array
  *              items:
- *                 $ref: '#/components/schemas/UserInput'
+ *                  type: object
+ *                  properties:
+ *                      email:
+ *                          type: string
+ *                          description: The user's email.
  *      UserInput:
  *          type: object
  *          properties:
@@ -141,12 +145,32 @@ familyRouter.get('/member/:memberEmail', (req: Request, res: Response, next: Nex
 });
 
 
-//TODO HIER NOG DOCUMENTATIE
+/**
+ * @swagger
+ * /family:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Create a new family.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/FamilyInput'
+ *      responses:
+ *          200:
+ *              description: The newly created family.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Family'
+ */
 familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const familyInput: FamilyInput = req.body;
+        const familyInput = <FamilyInput>req.body;
         const family = await familyService.createFamily(familyInput);
-        res.status(201).json(family);
+        res.status(200).json(family);
     } catch (error) {
         next(error);
     }

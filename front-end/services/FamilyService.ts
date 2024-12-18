@@ -24,6 +24,8 @@ const getFamilyByName = async (familyName: string) => {
   );
 }
 
+// HIER BEZIG met proberen te zien hoe het object moet doorgegeven naar backend
+
 const createFamily = (family: Family) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
       method: "POST",

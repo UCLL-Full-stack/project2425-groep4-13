@@ -20,21 +20,20 @@ const getFamilyByMember = (memberEmail: string): Family => {
     return family;
 }
 
-const createFamily = ({
+const createFamily = async ({
     name,
     members,
-}: FamilyInput): Family => {
+}: FamilyInput): Promise<Family> => {
     const existingFamily = familyDb.getFamilyByName(name);
     if (existingFamily) throw new Error(`Family with name ${name} already exists.`);
 
-
-    // lijst van Users maken uit de lijst met UserInputs
-    const membersAsUsers = members.map(member => 
-        new User({
-            email: member.email,
-            firstName: member.firstName,
-            lastName: member.lastName,
-            password: member.password,
+    // lijst van Users maken uit de lijst met UserInputs via hun email
+    const membersAsUsers = await Promise.all(
+        members.map(async (member) => {
+            if (!member.email) throw new Error("User email is required");
+            const user = await userDb.getUserByEmail(member.email);
+            if (!user) throw new Error(`User with email ${member.email} not found`);
+            return user;
         })
     );
 
