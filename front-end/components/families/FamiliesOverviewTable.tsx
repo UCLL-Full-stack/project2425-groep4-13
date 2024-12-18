@@ -1,4 +1,4 @@
-import { Family } from '@/types';
+import { Family } from '@types';
 import React from 'react';
 
 type Props = {

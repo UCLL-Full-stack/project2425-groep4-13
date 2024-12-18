@@ -1,5 +1,5 @@
-import FamilyService from '@/services/FamilyService';
-import { Family, User } from '@/types';
+import FamilyService from '@services/FamilyService';
+import { Family, User } from '@types';
 import React, { useState } from 'react';
 
 

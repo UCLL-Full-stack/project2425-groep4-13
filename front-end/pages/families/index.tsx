@@ -1,10 +1,10 @@
-import FamiliesOverviewTable from "@/components/families/FamiliesOverviewTable";
-import FamiliesSearchBar from "@/components/families/FamiliesSearchBar";
-import FamilySignup from "@/components/families/FamilySignup";
-import RegisterFamilyWindow from "@/components/families/RegisterFamilyWindow";
-import Header from "@/components/header";
-import FamilyService from "@/services/FamilyService";
-import { Family } from "@/types";
+import FamiliesOverviewTable from "@components/families/FamiliesOverviewTable";
+import FamiliesSearchBar from "@components/families/FamiliesSearchBar";
+import FamilySignup from "@components/families/FamilySignup";
+import RegisterFamilyWindow from "@components/families/RegisterFamilyWindow";
+import Header from "@components/header";
+import FamilyService from "@services/FamilyService";
+import { Family } from "@types";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 

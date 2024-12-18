@@ -222,8 +222,8 @@ p {
 .login-form button:hover {
   background-color: rgb(68, 185, 68);
   transition-duration: 0.1s;
+}
 
 .form-error {
   color: red;
 }
-

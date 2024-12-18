@@ -1,7 +1,7 @@
 // om te zoeken naar bestaande families om er een te joinen
 
-import FamilyService from '@/services/FamilyService';
-import { Family } from '@/types';
+import FamilyService from '@services/FamilyService';
+import { Family } from '@types';
 import React, { useState } from 'react';
 
 
