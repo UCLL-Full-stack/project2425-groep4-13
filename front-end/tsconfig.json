@@ -16,9 +16,19 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
+      "@components/*": [
+        "components/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@types": [
+        "types/index.ts"
+      ],
+      "@styles/*": [
+        "styles/*"
       ]
     },
     "forceConsistentCasingInFileNames": true

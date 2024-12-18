@@ -18,8 +18,8 @@ const Header: React.FC = () => {
                 <Link href="/login" className="rounded-outline-button">
                     LOG IN
                 </Link>
-                <Link href="" className="rounded-outline-button">
-                    VOORBEELD
+                <Link href="/register" className="rounded-outline-button">
+                    Register
                 </Link>
             </nav>
         </header>

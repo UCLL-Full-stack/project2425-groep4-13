@@ -1,6 +1,9 @@
 import { User } from '../model/user';
 import userDb from '../repository/user.db';
-import { UserInput } from '../types';
+import { UserInput, AuthenticationResponse } from '../types';
+import bcrypt from 'bcrypt';
+import { generateJWTtoken } from '../util/jwt';
+
 
 const getAllUsers = (): User[] => userDb.getAllUsers();
 
@@ -22,23 +25,43 @@ const getUserByLastName = (lastName: string): User | null => {
     return user;
 };
 
-const createUser = ({
+const createUser = async ({
     email,
     firstName,
     lastName,
     password,
-}: UserInput): User => {
-    const existingUser = userDb.getUserByEmail(email);
+}: UserInput): Promise<User> => {
+    const existingUser = await userDb.getUserByEmail(email);
     if (existingUser) throw new Error(`User with email ${email} already exists.`);
 
+    const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({
         email,
         firstName,
         lastName,
-        password,
+        password: hashedPassword,
     });
 
-    return userDb.createUser(user);
+    return await userDb.createUser(user);
+};
+
+
+const authenticate = async ({ email, password }: UserInput): Promise<AuthenticationResponse> => {
+    const user = await getUserByEmail(email);
+    if (!user) {
+        throw new Error(`User with e-mail: ${email} does not exist.`);
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.getPassword());
+    if (!isValidPassword) {
+        throw new Error('Invalid password.');
+    }
+
+    return {
+        token: generateJWTtoken(email),
+        email,
+        fullname: `${user.getFirstName()} ${user.getLastName()}`,
+    }
 };
 
 export default {
@@ -47,4 +70,7 @@ export default {
     getUserByFirstName,
     getUserByLastName,
     createUser,
+    authenticate,
 };
+
+

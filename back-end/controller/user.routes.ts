@@ -33,7 +33,24 @@
  *            password:
  *              type: string
  *              description: The user's password.
-
+*      AuthenticationRequest:
+ *          type: object
+ *          properties:
+ *            email:
+ *              type: string
+ *              description: User email.
+ *            password:
+ *              type: string
+ *              description: User password.
+ *      AuthenticationResponse:
+ *          type: object
+ *          properties:
+ *            token:
+ *              type: string
+ *              description: JWT token.
+ *            username:
+ *              type: string
+ *              description: User name.
  */
 import express, { NextFunction, Request, Response } from 'express';
 import userService from '../service/user.service';
@@ -200,5 +217,67 @@ userRouter.post('/', async (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
+/**
+ * @swagger
+ * /users/signup:
+ *   post:
+ *      summary: Create a new user.
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserInput'
+ *      responses:
+ *         200:
+ *            description: The created user object
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/User'
+ */
+userRouter.post(
+    '/signup',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const user = req.body as UserInput;
+            const newUser = await userService.createUser(user);
+            res.status(200).json(newUser);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Authenticate a user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuthenticationRequest'
+ *     responses:
+ *       200:
+ *         description: Authentication successful.
+ *         content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/AuthenticationResponse'
+ */
+userRouter.post(
+    '/login',
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const userInput = <UserInput>req.body;
+            const response = await userService.authenticate(userInput);
+            res.status(200).json({ message: 'Authentication successful', ...response });
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 
 export { userRouter };
