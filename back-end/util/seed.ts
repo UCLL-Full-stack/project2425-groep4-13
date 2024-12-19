@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 const main = async () => {
     await prisma.family.deleteMany();
     await prisma.user.deleteMany();
+    await prisma.product.deleteMany();
 
     // users
 

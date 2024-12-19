@@ -19,6 +19,10 @@ type JoinFamilyInput = {
     user: UserInput;
 }
 
+type ProductInput = {
+    name: string;
+}
+
 type AuthenticationResponse = {
     token: string;
     email: string;
@@ -26,4 +30,11 @@ type AuthenticationResponse = {
     role: string;
 };
 
-export { UserInput, FamilyInput, AuthenticationResponse, JoinFamilyInput, Role };
+export {
+    UserInput,
+    FamilyInput,
+    AuthenticationResponse,
+    JoinFamilyInput,
+    Role,
+    ProductInput
+};
