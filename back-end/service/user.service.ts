@@ -31,6 +31,11 @@ const createUser = async ({
     lastName,
     password,
 }: UserInput): Promise<User> => {
+    if (!email) throw new Error("User email is required.");
+    if (!firstName) throw new Error("User first name is required.");
+    if (!lastName) throw new Error("User last name is required.");
+    if (!password) throw new Error("User password is required.");
+
     const existingUser = await userDb.getUserByEmail(email);
     if (existingUser) throw new Error(`User with email ${email} already exists.`);
 
@@ -47,6 +52,9 @@ const createUser = async ({
 
 
 const authenticate = async ({ email, password }: UserInput): Promise<AuthenticationResponse> => {
+    if (!email) throw new Error("User email is required.");
+    if (!password) throw new Error("User password is required.");
+
     const user = await getUserByEmail(email);
     if (!user) {
         throw new Error(`User with e-mail: ${email} does not exist.`);

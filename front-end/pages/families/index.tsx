@@ -13,7 +13,11 @@ const Families: React.FC = () => {
     const [currentStep, setCurrentStep] = useState<String>(); // om te weten in welke stap de user zit
 
     const getFamily = async () => {
-        const response = await FamilyService.getFamilyByMemberEmail("mike.doe@ucll.be");
+        if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
+
+        const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
+
+        const response = await FamilyService.getFamilyByMemberEmail(loggedInUserEmail);
         if (response.status === 200) { // als succesvolle fetch, dan zit de user dus in een family
             const json: Family = await response.json();
             setFamily(json);

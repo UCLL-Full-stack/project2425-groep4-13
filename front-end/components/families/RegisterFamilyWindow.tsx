@@ -31,7 +31,7 @@ const RegisterFamilyWindow: React.FC<Props> = ({ handleFamilyRegistered }: Props
         }
 
         // checken of die family niet al bestaat (is ook validatie maar hoeft niet voor elk karakter te runnen)
-        const existingFamilyResponse = await FamilyService.getFamilyByName(familyName || "thiswillneverbeneeded"); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
+        const existingFamilyResponse = await FamilyService.getFamilyByName(familyName!); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
 
         if (existingFamilyResponse.status === 200) { // als er een familie is gevonden met die naam
             setError("Family with this name already exists.");
@@ -41,29 +41,25 @@ const RegisterFamilyWindow: React.FC<Props> = ({ handleFamilyRegistered }: Props
         if (familyName === null) { return; } // familyName moet valid zijn, maar dat is normaal gezien het geval want deze functie wordt alleen gerunt als family name valid is
         const familyNameValid = familyName || "Family Error"; // omdat die state variabele null kan zijn moet dit, zodat typescript zeker weet dat het idd niet null is
 
-        const loggedInUserEmail = "mike.doe@ucll.be";
-        // TODO dit moet vervangen door de localstorage van ingelogde user
+        if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
+        const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 
-        // const userResponse = await UserService.getFamilyByMemberEmail(loggedInUserEmail);
-        // const json = await userResponse.json();
 
-        const family = {
+
+        const family: Family = {
             name: familyNameValid,
             members: [{ email: loggedInUserEmail }], // als een familie wordt aangemaakt is de user die het aangemaakt heeft voorlopig nog de enige user
         }
 
-        // const response = await FamilyService.createFamily(family);
+        const response = await FamilyService.createFamily(family);
         // const data = await response.json();
-        // if (!response.ok) {
-        //     // error
-        //     setError("Something went wrong while registering family. Please try again later.");
-        // } else {
-        //     // family registered succesfully
-        //     handleFamilyRegistered();
-        //     console.log(data);
-
-        // }
-
+        if (!response.ok) {
+            // error
+            setError("Something went wrong while registering family. Please try again later.");
+        } else {
+            // family registered succesfully
+            handleFamilyRegistered();
+        }
     }
 
     return (
