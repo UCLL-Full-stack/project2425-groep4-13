@@ -19,6 +19,7 @@ test("given: valid values for user, when: user is created, then: user is created
     expect(user.getFirstName()).toEqual(firstName);
     expect(user.getLastName()).toEqual(lastName);
     expect(user.getPassword()).toEqual(password);
+    expect(user.getRole()).toEqual(role);
 });
 
 test("given: invalid email for user, when: user is created, then: error is thrown", () => {

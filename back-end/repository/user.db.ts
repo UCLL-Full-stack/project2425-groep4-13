@@ -5,13 +5,15 @@ const users = [
         email: "john.doe@ucll.be",
         firstName: "John",
         lastName: "Doe",
-        password: "Secret123"
+        password: "Secret123",
+        role: "owner",
     }),
     new User({
         email: "mike.doe@ucll.be",
         firstName: "Mike",
         lastName: "Doe",
-        password: "Saaaaaaj"
+        password: "Saaaaaaj",
+        role: "child",
     })
 ];
 
