@@ -84,7 +84,7 @@ const Login: React.FC = () => {
 
     return (
         <>
-            <h3 className="font-sans text-green-700 text-3xl underline font-weight-700 font-bold">Login</h3>
+            <h3 className="font-sans text-darkgreen text-3xl underline font-weight-700 font-bold">Login</h3>
             {statusMessages && (
                 <div className="row">
                     <ul className="list-none mb-3 mx-auto ">
@@ -92,8 +92,8 @@ const Login: React.FC = () => {
                             <li
                                 key={index}
                                 className={classNames({
-                                    "text-red-800": type === "error",
-                                    "text-green-800": type === "success",
+                                    "text-red": type === "error",
+                                    "text-darkgreen": type === "success",
                                 })}
                             >
                                 {message}
@@ -102,10 +102,10 @@ const Login: React.FC = () => {
                     </ul>
                 </div>
             )}
-            <form onSubmit={handleSubmit} className="bg-neutral-200 border-2 border-neutral-300 rounded shadow-md p-5 text-center">
+            <form onSubmit={handleSubmit} className="bg-whitesmoke border-2 border-mediumgray rounded shadow-md p-5 text-center">
                 <label
                     htmlFor="emailInput"
-                    className="font-sans text-lg font-bold text-green-700 "
+                    className="font-sans text-lg font-bold text-darkgreen"
                 >
                     Email
                 </label>
@@ -115,15 +115,15 @@ const Login: React.FC = () => {
                         type="text"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                        className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                     />
-                    {emailError && <div className="text-red-800 ">{emailError}</div>}
+                    {emailError && <div className="text-red ">{emailError}</div>}
                 </div>
                 <div className="mt-2">
                     <div>
                         <label
                             htmlFor="passwordInput"
-                            className="font-sans text-lg font-bold text-green-700"
+                            className="font-sans text-lg font-bold text-darkgreen"
                         >
                             Password
                         </label>
@@ -134,15 +134,15 @@ const Login: React.FC = () => {
                             type="password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
-                            className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                            className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                         />
                         {passwordError && (
-                            <div className=" text-red-800">{passwordError}</div>
+                            <div className=" text-red">{passwordError}</div>
                         )}
                     </div>
                 </div>
                 <button
-                    className="mt-4 py-2 px-8 bg-green-700 text-neutral-100 font-sans font-bold text-xl rounded-full border-none hover:bg-green-500 transition duration-100"
+                    className="mt-4 py-2 px-8 bg-darkgreen text-whitesmoke font-sans font-bold text-xl rounded-full border-none hover:bg-lightgreen transition duration-100"
                     type="submit"
                 >
                     Login

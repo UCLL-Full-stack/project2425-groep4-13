@@ -1,22 +1,35 @@
 import { User } from '../model/user';
-import database from './database';
 
-const users = [
-    new User({
-        email: "john.doe@ucll.be",
-        firstName: "John",
-        lastName: "Doe",
-        password: "Secret123",
-        role: "owner",
-    }),
-    new User({
-        email: "mike.doe@ucll.be",
-        firstName: "Mike",
-        lastName: "Doe",
-        password: "Saaaaaaj",
-        role: "child",
-    })
-];
+import database from './database';
+import bcrypt from 'bcrypt';
+
+
+const initializeDevUsers = async () => {
+    const hashedPassword = await bcrypt.hash("Secret123", 12);
+
+    const users = [
+        new User({
+            email: "john.doe@ucll.be",
+            firstName: "John",
+            lastName: "Doe",
+            password: hashedPassword,
+            role: "owner",
+        }),
+        new User({
+            email: "mike.doe@ucll.be",
+            firstName: "Mike",
+            lastName: "Doe",
+            password: hashedPassword,
+            role: "child",
+        })
+    ];
+    return users;
+};
+
+let users: User[] = [];
+initializeDevUsers().then((result) => {
+    users = result;
+});
 
 const getAllUsers = async (): Promise<User[]> => {
     try {
