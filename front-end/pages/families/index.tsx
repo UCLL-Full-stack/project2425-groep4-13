@@ -22,8 +22,6 @@ const Families: React.FC = () => {
             const json: Family = await response.json();
             setFamily(json);
         } else { // dan zit de user niet in een familie
-            console.log("status is:");
-            console.log(response.status);
             setFamily(null);
         }
     }
@@ -31,7 +29,6 @@ const Families: React.FC = () => {
     // use effect die moet runnen wanneer de pagina voor het eerst geopend wordt
     // moet zo met 2 aparte useEffects want setFamily gebeurt niet instant, maar die variabele is wel nodig om de pagina te renderen
     useEffect(() => {
-        console.log("this running");
         getFamily();
     }, []);
 

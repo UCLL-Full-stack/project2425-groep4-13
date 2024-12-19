@@ -58,7 +58,6 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
                 localStorage.setItem("Family", JSON.stringify(family));
 
                 handleRequestedFamilyJoin();
-                console.log("YUP");
             } else {
                 setError("Something went wrong while adding user to family");
             }
