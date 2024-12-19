@@ -67,7 +67,7 @@ test("given: user in database, when: get user by email, then: return user", () =
     userDb.getUserByEmail = getUserByEmailMock;
 
     //when
-    const userByEmail = userService.getUserByEmail(userInput.email!);
+    const userByEmail = userService.getUserByEmail({email: userInput.email!});
 
     //then
     expect(userByEmail).toEqual(user);
@@ -80,64 +80,16 @@ test("given: user not in database, when: get user by email, then: throw error", 
     userDb.getUserByEmail = getUserByEmailMock;
 
     //when
-    const getUserByEmail = () => userService.getUserByEmail(userInput.email!);
+    const getUserByEmail = () => userService.getUserByEmail({email: userInput.email!});
 
     //then
     expect(getUserByEmail).toThrow(`User with email ${userInput.email} does not exist.`);
     expect(getUserByEmailMock).toHaveBeenCalledTimes(1);
 });
 
-test("given: user in database, when: get user by first name, then: return user", () => {
-    //given
-    getUserByFirstNameMock.mockReturnValue(user);
-    userDb.getUserByFirstName = getUserByFirstNameMock;
 
-    //when
-    const userByFirstName = userService.getUserByFirstName(userInput.firstName!);
 
-    //then
-    expect(userByFirstName).toEqual(user);
-    expect(getUserByFirstNameMock).toHaveBeenCalledTimes(1);
-});
 
-test("given: user not in database, when: get user by first name, then: throw error", () => {
-    //given
-    getUserByFirstNameMock.mockReturnValue(null);
-    userDb.getUserByFirstName = getUserByFirstNameMock;
-
-    //when
-    const getUserByFirstName = () => userService.getUserByFirstName(userInput.firstName!);
-
-    //then
-    expect(getUserByFirstName).toThrow(`User with first name ${userInput.firstName} does not exist.`);
-    expect(getUserByFirstNameMock).toHaveBeenCalledTimes(1);
-});
-
-test("given: user in database, when: get user by last name, then: return user", () => {
-    //given
-    getUserByLastNameMock.mockReturnValue(user);
-    userDb.getUserByLastName = getUserByLastNameMock;
-
-    //when
-    const userByLastName = userService.getUserByLastName(userInput.lastName!);
-
-    //then
-    expect(userByLastName).toEqual(user);
-    expect(getUserByLastNameMock).toHaveBeenCalledTimes(1);
-});
-
-test("given: user not in database, when: get user by last name, then: throw error", () => {
-    //given
-    getUserByLastNameMock.mockReturnValue(null);
-    userDb.getUserByLastName = getUserByLastNameMock;
-
-    //when
-    const getUserByLastName = () => userService.getUserByLastName(userInput.lastName!);
-
-    //then
-    expect(getUserByLastName).toThrow(`User with last name ${userInput.lastName} does not exist.`);
-    expect(getUserByLastNameMock).toHaveBeenCalledTimes(1);
-});
 
 test("given: user not in database, when: create user, then: return created user", () => {
     //given

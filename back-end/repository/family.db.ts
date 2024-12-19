@@ -1,6 +1,7 @@
 import { User } from "../model/user";
 import { Family } from "../model/family";
 import e from "express";
+import database from "./database";
 
 const families = [
     new Family({
@@ -56,37 +57,73 @@ const families = [
     })
 ];
 
-const getAllFamilies = (): Family[] => {
+const getAllFamilies = async (): Promise<Family[]> => {
     try {
-        return families;
+        const familiesPrisma = await database.family.findMany({
+            include: {
+                members: true,
+            }
+        });
+        return familiesPrisma.map((familyPrisma) => Family.from(familyPrisma));
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
     }
 };
 
-const getFamilyByName = (name: string): Family | null => {
+const getFamilyByName = async ({name} : {name: string}): Promise<Family | null> => {
     try {
-        return families.find((family) => family.getName() === name) || null;
+        const familyPrisma = await database.family.findUnique({
+            where: {name},
+            include: {
+                members: true,
+            }
+        });
+        return familyPrisma ? Family.from(familyPrisma) : null;
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
     }
 };
 
-const getFamilyByMember = (email: string): Family => {
+const getFamilyByMember = async ({ email }: { email: string }): Promise<Family | null> => {
     try {
-        return families.filter((family) => family.getMembers().some((member) => member.getEmail() === email))[0];
+        const familyPrisma = await database.family.findFirst({
+            where: {
+                members: {
+                    some: {
+                        email,
+                    },
+                },
+            },
+            include: {
+                members: true,
+            },
+        });
+
+        return familyPrisma ? Family.from(familyPrisma) : null;
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
     }
 };
 
-const createFamily = (family: Family): Family => {
+const createFamily = async (family: Family): Promise<Family> => {
     try {
-        families.push(family);
-        return family;
+        const familyPrisma = await database.family.create({
+            data: {
+                name: family.getName(),
+                members: {
+                    connect: family.getMembers().map((member) => ({id: member.getId()})),
+                }
+            },
+            include:{
+                members: true,
+            }
+            
+
+        })
+        return Family.from(familyPrisma);
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');

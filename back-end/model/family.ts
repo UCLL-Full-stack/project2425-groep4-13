@@ -1,4 +1,6 @@
 import { User } from "./user";
+import {Family as FamilyPrisma, User as UserPrisma} from '@prisma/client'
+
 
 export class Family {
     private id?: number;
@@ -57,5 +59,13 @@ export class Family {
             this.name === family.getName() &&
             this.members === family.getMembers()
         );
+    }
+
+    static from({ id, name, members, }: FamilyPrisma & {members: UserPrisma[];}) {
+        return new Family({
+            id,
+            name,
+            members: members.map((member) => User.from(member)),
+        });
     }
 }
