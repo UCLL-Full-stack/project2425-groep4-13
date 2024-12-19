@@ -145,6 +145,11 @@ test("given: user not in database, when: create user, then: return created user"
     //when
     const createdUser = userService.createUser(userInput);
 
+    console.log("created:");
+    console.log(createdUser);
+    console.log("expected:");
+    console.log(user);
+
     //then
     expect(createdUser).toEqual(user);
     expect(createUserMock).toHaveBeenCalledTimes(1);
