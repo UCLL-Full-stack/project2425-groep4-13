@@ -30,7 +30,7 @@ const createUser = async ({
     firstName,
     lastName,
     password,
-}: UserInput): Promise<User> => {
+}: UserInput): Promise<AuthenticationResponse> => {
     const existingUser = await userDb.getUserByEmail(email);
     if (existingUser) throw new Error(`User with email ${email} already exists.`);
 
@@ -42,7 +42,12 @@ const createUser = async ({
         password: hashedPassword,
     });
 
-    return await userDb.createUser(user);
+    const newUser = await userDb.createUser(user);
+    return {
+        token: generateJWTtoken(newUser.getEmail() || ''),
+        email: newUser.getEmail() || '',
+        fullname: `${newUser.getFirstName()} ${newUser.getLastName()}`,
+    }
 };
 
 
