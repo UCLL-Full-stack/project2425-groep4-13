@@ -9,12 +9,14 @@ const FamiliesOverviewTable: React.FC<Props> = ({ family }: Props) => {
   return (
     <>
       {family && (
-        <div className="families-overview-table">
-          <h1>{family.name}</h1>
-          <table>
-            <thead>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
+        <div className="bg-neutral-200 border-2 border-mediumgray rounded shadow-md p-5 text-center">
+          <h1 className='text-start text-2xl font-bold'>{family.name}</h1>
+          <table className='w-full table-fixed mt-5'>
+            <thead className='bg-darkgreen text-whitesmoke w-full'>
+              <tr className=''>
+                <th scope="col" className='w-1/2'>Name</th>
+                <th scope="col" className='w-1/2'>Email</th>
+              </tr>
             </thead>
             <tbody>
               {family.members.map((member, memberIndex) => (

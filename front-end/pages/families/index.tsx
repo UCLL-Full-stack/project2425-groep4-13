@@ -67,7 +67,8 @@ const Families: React.FC = () => {
             </Head>
             <Header />
             <main>
-                <h1>My Family Overview</h1>
+                <h1 className="font-sans text-darkgreen text-3xl underline font-weight-700 font-bold">
+                    My Family Overview</h1>
 
                 {
                     currentStep === "FamilySignup" && <FamilySignup showFamilyRegisterWindow={showFamilyRegisterWindow} showFamilySearchWindow={showFamilySearchWindow} />
