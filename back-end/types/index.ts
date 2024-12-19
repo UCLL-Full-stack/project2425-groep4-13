@@ -23,6 +23,12 @@ type ProductInput = {
     name: string;
 }
 
+type Item = {
+    product: ProductInput;
+    amount: number;
+    expirationDate: Date;
+}
+
 type AuthenticationResponse = {
     token: string;
     email: string;
