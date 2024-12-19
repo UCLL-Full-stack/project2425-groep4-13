@@ -1,4 +1,4 @@
-// na aanpassingen dit runnen:
+// na aanpassingen dit runnen (als je in de back-end folder zit in terminal):
 // npx prisma migrate dev
 
 generator client {
@@ -30,4 +30,13 @@ model Family {
 model Product {
     id   Int    @id @default(autoincrement())
     name String @unique
+    Item Item[]
+}
+
+model Item {
+    id             Int      @id @default(autoincrement())
+    productId      Int
+    product        Product  @relation(fields: [productId], references: [id])
+    amount         Int
+    expirationDate DateTime
 }
