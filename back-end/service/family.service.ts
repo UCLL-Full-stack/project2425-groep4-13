@@ -14,10 +14,31 @@ const getFamilyByName = async (name: string): Promise<Family | null> => {
     return family;
 };
 
+// functie om te checken of een familie bestaat, indien nee, dan null returnen in plaats van een error gooien
+const checkAndGetFamilyByName = async (name: string): Promise<Family | null> => {
+    const family = await familyDb.getFamilyByName({name});
+    if(family) {
+        return family;
+    } else {
+        return null;
+    }
+
+}
+
 const getFamilyByMember = async (memberEmail: string): Promise<Family> => {
     const family = await familyDb.getFamilyByMember({email: memberEmail});
     if (!family) throw new Error(`No family found for member ${memberEmail}.`);
     return family;
+}
+
+// functie om te checken of er een familie bestaat waar de user in zit, indien nee dan null returnen in plaats van een error gooien
+const checkAndGetFamilyByMember = async (memberEmail: string): Promise<Family | null> => {
+    const family = await familyDb.getFamilyByMember({email: memberEmail});
+    if (family) {
+        return family;
+    } else {
+        return null;
+    }
 }
 
 const createFamily = async ({
@@ -75,7 +96,9 @@ const addMemberToFamily = async (
 export default {
     getAllFamilies,
     getFamilyByName,
+    checkAndGetFamilyByName,
     getFamilyByMember,
+    checkAndGetFamilyByMember,
     createFamily,
     addMemberToFamily,
 };

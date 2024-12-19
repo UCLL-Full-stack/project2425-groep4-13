@@ -12,6 +12,19 @@ const getFamilyByMemberEmail = async (memberEmail: string) => {
       );
 }
 
+// functie die een familie opvraagt via user maar als die niet bestaat dan gooit back-end geen error maar geeft gewoon "null" terug
+const checkAndGetFamilyByMemberEmail = async (memberEmail: string) => {
+  return await fetch(
+      process.env.NEXT_PUBLIC_API_URL + `/family/check/member/${memberEmail}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+}
+
 const getFamilyByName = async (familyName: string) => {
   return await fetch(
     process.env.NEXT_PUBLIC_API_URL + `/family/${familyName}`,
@@ -24,7 +37,18 @@ const getFamilyByName = async (familyName: string) => {
   );
 }
 
-// HIER BEZIG met proberen te zien hoe het object moet doorgegeven naar backend
+// functie die een familie opvraagt maar als die niet bestaat dan gooit back-end geen error maar geeft gewoon "null" terug
+const checkAndGetFamilyByName = async (familyName: string) => {
+  return await fetch(
+    process.env.NEXT_PUBLIC_API_URL + `/family/check/${familyName}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
 
 const createFamily = (family: Family) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
@@ -36,17 +60,6 @@ const createFamily = (family: Family) => {
       body: JSON.stringify(family),
   });
 };
-
-// const createFamily = ({ name, members }: { name: string, members: { email: string }[] }) => {
-//   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
-//       method: "POST",
-
-//       headers: {
-//           "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ name, members }),
-//   });
-// };
 
 const addUserToFamily = (family: Family, userEmail: string) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family/member", {
@@ -63,9 +76,11 @@ const addUserToFamily = (family: Family, userEmail: string) => {
 }
 
 const FamilyService = {
-  getFamilyByMemberEmail,
+    getFamilyByMemberEmail,
+    checkAndGetFamilyByMemberEmail,
     createFamily,
     getFamilyByName,
+    checkAndGetFamilyByName,
     addUserToFamily,
 }
 

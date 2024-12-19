@@ -118,6 +118,34 @@ familyRouter.get('/:name', async (req: Request, res: Response, next: NextFunctio
 
 /**
  * @swagger
+ * /family/check/{name}:
+ *   get:
+ *     summary: Check if family exists and return it if yes, if no return null.
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         description: The family's name.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A family or null.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Family'
+ */
+familyRouter.get('/check/:name', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(200).json(await familyService.checkAndGetFamilyByName(req.params.name));
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * @swagger
  * /family/member/{memberEmail}:
  *   get:
  *     summary: Get families by member email.
@@ -139,6 +167,34 @@ familyRouter.get('/:name', async (req: Request, res: Response, next: NextFunctio
 familyRouter.get('/member/:memberEmail', async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.status(200).json(await familyService.getFamilyByMember(req.params.memberEmail));
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * @swagger
+ * /family/check/member/{memberEmail}:
+ *   get:
+ *     summary: Use member email to check if there is a family with this member already, if yes return it, if not return null.
+ *     parameters:
+ *       - in: path
+ *         name: memberEmail
+ *         required: true
+ *         description: The member's email.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A family, or null if the user is member of no family.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Family'
+ */
+familyRouter.get('/check/member/:memberEmail', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        res.status(200).json(await familyService.checkAndGetFamilyByMember(req.params.memberEmail));
     } catch (error) {
         next(error);
     }
@@ -201,13 +257,6 @@ familyRouter.post('/', async (req: Request, res: Response, next: NextFunction) =
 familyRouter.post('/member', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const joinFamilyInput = <JoinFamilyInput>req.body;
-        // const {family, user} = req.body as {family: FamilyInput; user: UserInput} // de parameters ophalen en naar juiste DTO type casten
-
-        console.log("test");    
-        console.log("input");
-        console.log(joinFamilyInput);
-        // console.log(joinFamilyInput.family);
-        // console.log(joinFamilyInput.user);
 
         // TODO de user moet nog zijn role op "pending" gezet krijgen ook!
         // want default is null en front-end geeft dat gwn zo door en kan dat niet zelf wijzigen

@@ -33,13 +33,15 @@ const RegisterFamilyWindow: React.FC<Props> = ({ handleFamilyRegistered }: Props
         if (familyName === null) { return; } // familyName moet valid zijn, maar dat is normaal gezien het geval want deze functie wordt alleen gerunt als family name valid is
 
         // checken of die family niet al bestaat (is ook validatie maar hoeft niet voor elk karakter te runnen)
-        const existingFamilyResponse = await FamilyService.getFamilyByName(familyName!); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
+        const existingFamilyResponse = await FamilyService.checkAndGetFamilyByName(familyName!); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
 
-        if (existingFamilyResponse.status === 200) { // als er een familie is gevonden met die naam
-            setError("Family with this name already exists.");
+        if (existingFamilyResponse.status === 200) {
+            const familyData = await existingFamilyResponse.json();
+            if (familyData !== null) { // als die familie al bestaat
+                setError("Family with this name already exists.");
+            }
             return;
         }
-
         if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
         const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 

@@ -23,15 +23,18 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
             result = false;
         }
 
-        const response = await FamilyService.getFamilyByName(currentSearchTerm || "thiswillneverbeneeded"); // ervoor zorgen dat er een valide string wordt doorgegeven, maar door de if statement hierboven is dat zoizo
+        const response = await FamilyService.checkAndGetFamilyByName(currentSearchTerm!); // maar door de if statement hierboven is currentSerachTerm altijd oké
 
-        if (response.status === 200) { // als er een familie is gevonden met die naam
-            result = true;
-        } else if (response.status === 401) { // als er een fout is
+        if (response.status === 200) {
+            const familyData = await response.json();
+            if (familyData !== null) { // als er een familie is gevonden met die naam
+                result = true;
+            } else {
+                setError("Family with this name does not exist");
+                result = false; // als die familie niet bestaat
+            }
+        } else { // als er een fout is
             setError("Something went wrong fetching families with this name");
-            result = false;
-        } else {
-            setError("Family with this name does not exist");
             result = false;
         }
 
@@ -48,7 +51,7 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
         const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 
 
-        const response = await FamilyService.getFamilyByName(currentSearchTerm || "thiswillneverbeneeded");
+        const response = await FamilyService.getFamilyByName(currentSearchTerm || "thiswillneverbeneeded"); // dit gaat nu werken, want in validate wordt gecheckt of die familie bestaat
         if (response.status === 200) {
 
             const family: Family = await response.json();

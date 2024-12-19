@@ -17,11 +17,13 @@ const Families: React.FC = () => {
 
         const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 
-        const response = await FamilyService.getFamilyByMemberEmail(loggedInUserEmail);
-        if (response.status === 200) { // als succesvolle fetch, dan zit de user dus in een family
-            const json: Family = await response.json();
-            setFamily(json);
-        } else { // dan zit de user niet in een familie
+        const response = await FamilyService.checkAndGetFamilyByMemberEmail(loggedInUserEmail);
+        const familyData = await response.json();
+        if (response.status === 200) { // als succesvolle fetch
+            if (familyData === null) { // als de user nog niet in een family zit
+                setFamily(familyData);
+            }
+        } else { // als er een error is geweest
             setFamily(null);
         }
     }
