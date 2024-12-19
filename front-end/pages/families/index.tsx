@@ -34,7 +34,7 @@ const Families: React.FC = () => {
 
     // use effect die update als de "family" state variabele verandert, dus nadat die wordt gefetched
     useEffect(() => {
-        localStorage.setItem("Family", JSON.stringify(family));
+        localStorage.setItem("Family", JSON.stringify(family?.name)); // als de user geen familie heeft, dan moet de family state null zijn
 
         // als user al een familie heeft, dan zijn alle stappen gedaan
         if (family !== null) {
