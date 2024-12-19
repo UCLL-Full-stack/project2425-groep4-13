@@ -38,9 +38,13 @@ const Families: React.FC = () => {
 
         // als user al een familie heeft, dan zijn alle stappen gedaan
         if (family !== null) {
-            // hier checken of user status "===" pending, dan zit die nog niet echt helemaal in de familie
-            setCurrentStep("PendingFamilyApproval")
-            // setCurrentStep("InFamily")
+            if (localStorage.getItem("loggedInUser") !== null) {
+                if (JSON.parse(localStorage.getItem("loggedInUser")!).role == "pending") { // als de user nog pending is is in die familie
+                    setCurrentStep("PendingFamilyApproval")
+                } else { // als de user al geaccepteerd is in de family
+                    setCurrentStep("InFamily")
+                }
+            }
         } else {
             setCurrentStep("FamilySignup")
         }
