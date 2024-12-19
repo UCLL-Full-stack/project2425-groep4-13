@@ -125,8 +125,8 @@ const Register: React.FC = () => {
                     </ul>
                 </div>
             )}
-            <form onSubmit={handleSubmit} className="bg-neutral-200 border-2 border-neutral-300 rounded shadow-md p-5 text-center">
-                <label htmlFor="emailInput" className="font-sans text-lg font-bold text-green-700 ">
+            <form onSubmit={handleSubmit} className="bg-whitesmoke border-2 border-mediumgray rounded shadow-md p-5 text-center">
+                <label htmlFor="emailInput" className="font-sans text-lg font-bold text-darkgreen">
                     Email
                 </label>
                 <div className="block mb-2 text-sm font-medium">
@@ -135,12 +135,12 @@ const Register: React.FC = () => {
                         type="text"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                        className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                     />
-                    {emailError && <div className="text-red-800 ">{emailError}</div>}
+                    {emailError && <div className="text-red ">{emailError}</div>}
                 </div>
                 <div className="mt-2">
-                    <label htmlFor="firstNameInput" className="font-sans text-lg font-bold text-green-700">
+                    <label htmlFor="firstNameInput" className="font-sans text-lg font-bold text-darkgreen">
                         First Name
                     </label>
                     <div className="block mb-2 text-sm font-medium">
@@ -149,13 +149,13 @@ const Register: React.FC = () => {
                             type="text"
                             value={firstName}
                             onChange={(event) => setFirstName(event.target.value)}
-                            className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                            className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                         />
                         {firstNameError && <div className="text-red-800">{firstNameError}</div>}
                     </div>
                 </div>
                 <div className="mt-2">
-                    <label htmlFor="lastNameInput" className="font-sans text-lg font-bold text-green-700">
+                    <label htmlFor="lastNameInput" className="font-sans text-lg font-bold text-darkgreen">
                         Last Name
                     </label>
                     <div className="block mb-2 text-sm font-medium">
@@ -164,14 +164,14 @@ const Register: React.FC = () => {
                             type="text"
                             value={lastName}
                             onChange={(event) => setLastName(event.target.value)}
-                            className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                            className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                         />
-                        {lastNameError && <div className="text-red-800">{lastNameError}</div>}
+                        {lastNameError && <div className="text-red">{lastNameError}</div>}
                     </div>
                 </div>
                 <div className="mt-2">
                     <label
-                        htmlFor="passwordInput" className="font-sans text-lg font-bold text-green-700">
+                        htmlFor="passwordInput" className="font-sans text-lg font-bold text-darkgreen">
                         Password
                     </label>
                     <div className="block mb-2 text-sm font-medium">
@@ -180,7 +180,7 @@ const Register: React.FC = () => {
                             type="password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
-                            className="border border-emerald-600 p-2 border-solid rounded-md w-2/4"
+                            className="border border-darkgreen p-2 border-solid rounded-md w-2/4"
                         />
                         {passwordError && (
                             <div className=" text-red-800">{passwordError}</div>
@@ -188,7 +188,7 @@ const Register: React.FC = () => {
                     </div>
                 </div>
                 <button
-                    className="mt-4 py-2 px-8 bg-green-700 text-neutral-100 font-sans font-bold text-xl rounded-full border-none hover:bg-green-500 transition duration-100"
+                    className="mt-4 py-2 px-8 bg-darkgreen text-whitesmoke font-sans font-bold text-xl rounded-full border-none hover:bg-lightgreen transition duration-100"
                     type="submit"
                 >
                     Register

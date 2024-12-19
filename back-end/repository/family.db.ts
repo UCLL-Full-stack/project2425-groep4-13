@@ -1,60 +1,71 @@
 import { User } from "../model/user";
 import { Family } from "../model/family";
+import bcrypt from "bcrypt";
 import e from "express";
 
-const families = [
-    new Family({
-        name: "Doe",
-        members: [
-            new User({
-                email: "john.doe@ucll.be",
-                firstName: "John",
-                lastName: "Doe",
-                password: "Secret123",
-                role: "owner",
-            }),
-            new User({
-                email: "jane.doe@ucll.be",
-                firstName: "Jane",
-                lastName: "Doe",
-                password: "Secret123",
-                role: "parent",
-            }),
-            new User({
-                email: "play.doe@ucll.be",
-                firstName: "Play",
-                lastName: "Doe",
-                password: "Secret123",
-                role: "child",
-            })
-        ]
-    }),
-    new Family({
-        name: "Smith",
-        members: [
-            // new User({
-            //     email: "john.doe@ucll.be",
-            //     firstName: "John",
-            //     lastName: "Doe",
-            //     password: "Secret123",
-            // }),
-            new User({
-                email: "jane.smith@ucll.be",
-                firstName: "Jane",
-                lastName: "Smith",
-                password: "Secret123",
-                role: "owner",
-            }),
-            new User({
-                email: "baby.smith@ucll.be",
-                firstName: "Baby",
-                lastName: "Smith",
-                password: "Secret123",
-                role: "parent",
-            })
-        ]
-    })
-];
+const initializeDevFamilies = async () => {
+    const hashedPassword = await bcrypt.hash("Secret123", 12);
+
+    const families = [
+        new Family({
+            name: "Doe",
+            members: [
+                new User({
+                    email: "john.doe@ucll.be",
+                    firstName: "John",
+                    lastName: "Doe",
+                    password: hashedPassword,
+                    role: "owner",
+                }),
+                new User({
+                    email: "jane.doe@ucll.be",
+                    firstName: "Jane",
+                    lastName: "Doe",
+                    password: hashedPassword,
+                    role: "parent",
+                }),
+                new User({
+                    email: "play.doe@ucll.be",
+                    firstName: "Play",
+                    lastName: "Doe",
+                    password: hashedPassword,
+                    role: "child",
+                })
+            ]
+        }),
+        new Family({
+            name: "Smith",
+            members: [
+                // new User({
+                //     email: "john.doe@ucll.be",
+                //     firstName: "John",
+                //     lastName: "Doe",
+                //     password: "Secret123",
+                // }),
+                new User({
+                    email: "jane.smith@ucll.be",
+                    firstName: "Jane",
+                    lastName: "Smith",
+                    password: hashedPassword,
+                    role: "owner",
+                }),
+                new User({
+                    email: "baby.smith@ucll.be",
+                    firstName: "Baby",
+                    lastName: "Smith",
+                    password: hashedPassword,
+                    role: "parent",
+                })
+            ]
+        })
+    ];
+    return families;
+};
+
+let families: Family[] = [];
+initializeDevFamilies().then((result) => {
+    families = result;
+});
 
 const getAllFamilies = (): Family[] => {
     try {

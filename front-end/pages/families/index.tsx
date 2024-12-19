@@ -34,7 +34,7 @@ const Families: React.FC = () => {
 
     // use effect die update als de "family" state variabele verandert, dus nadat die wordt gefetched
     useEffect(() => {
-        localStorage.setItem("Family", JSON.stringify(family));
+        localStorage.setItem("Family", JSON.stringify(family?.name)); // als de user geen familie heeft, dan moet de family state null zijn
 
         // als user al een familie heeft, dan zijn alle stappen gedaan
         if (family !== null) {
@@ -67,7 +67,8 @@ const Families: React.FC = () => {
             </Head>
             <Header />
             <main>
-                <h1>My Family Overview</h1>
+                <h1 className="font-sans text-darkgreen text-3xl underline font-weight-700 font-bold">
+                    My Family Overview</h1>
 
                 {
                     currentStep === "FamilySignup" && <FamilySignup showFamilyRegisterWindow={showFamilyRegisterWindow} showFamilySearchWindow={showFamilySearchWindow} />
@@ -85,28 +86,10 @@ const Families: React.FC = () => {
                     currentStep === "PendingFamilyApproval" && <p>Please wait until the family owner accepts your request to join their family. Refresh the page to check again.</p>
                 }
 
-                {/* <div className="centered">
-                    <button className="colored-button" onClick={openRegisterFamilyPrompt}>Add New Family</button>
-                </div>
-                {registerFamilyPromptOpen === true && <RegisterFamilyWindow closeRegisterFamilyPopup={closeRegisterFamilyPrompt}></RegisterFamilyWindow>} */}
+                {
+                    currentStep === "InFamily" && family && <FamiliesOverviewTable family={family} />
+                }
             </main>
-            {/* <main className="d-flex flex-column justify-content-center align-items-center">
-                <h1>Lecturers</h1>
-                <section>
-                    <h2>Lecturers overview</h2>
-                </section>
-                {
-                    lecturers && <LecturerOverviewTable lecturers={lecturers} selectLecturer={setSelectedLecturer} />
-                }
-                {
-                    selectedLecturer &&
-                    <>
-                        <h2>Courses taught by {selectedLecturer && `${selectedLecturer.user.firstName} ${selectedLecturer.user.lastName}`}</h2>
-                        <CourseOverviewTable lecturer={selectedLecturer} />
-                    </>
-
-                }
-            </main> */}
         </>
     );
 };

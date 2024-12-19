@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+    const [family, setFamily] = useState<string | null>(null);
 
     useEffect(() => {
         setLoggedInUser(localStorage.getItem("loggedInUser"));
+        setFamily(localStorage.getItem("Family"));
     }, []);
 
     const handleClick = () => {
         localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("Family");
         setLoggedInUser(null);
+        setFamily(null);
     };
 
     return (
