@@ -30,7 +30,7 @@ const createUser = async ({
     firstName,
     lastName,
     password,
-}: UserInput): Promise<User> => {
+}: UserInput): Promise<AuthenticationResponse> => {
     if (!email) throw new Error("User email is required.");
     if (!firstName) throw new Error("User first name is required.");
     if (!lastName) throw new Error("User last name is required.");
@@ -47,7 +47,12 @@ const createUser = async ({
         password: hashedPassword,
     });
 
-    return await userDb.createUser(user);
+    const newUser = await userDb.createUser(user);
+    return {
+        token: generateJWTtoken(newUser.getEmail() || ''),
+        email: newUser.getEmail() || '',
+        fullname: `${newUser.getFirstName()} ${newUser.getLastName()}`,
+    }
 };
 
 

@@ -48,7 +48,10 @@
  *            token:
  *              type: string
  *              description: JWT token.
- *            username:
+ *            email:
+ *              type: string
+ *              description: User email.
+ *            fullname:
  *              type: string
  *              description: User name.
  */
@@ -229,12 +232,12 @@ userRouter.post('/', async (req: Request, res: Response, next: NextFunction) => 
  *            schema:
  *              $ref: '#/components/schemas/UserInput'
  *      responses:
- *         200:
- *            description: The created user object
- *            content:
- *              application/json:
- *                schema:
- *                  $ref: '#/components/schemas/User'
+ *       200:
+ *         description: Authentication successful.
+ *         content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/AuthenticationResponse'
  */
 userRouter.post(
     '/signup',
