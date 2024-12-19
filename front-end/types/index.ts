@@ -4,10 +4,11 @@ export type Family = {
 };
 
 export type User = {
-    email: string,
-    firstName: string,
-    lastName: string,
-    password: string,
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    password?: string,
+    role?: string,
 };
 
 export type StatusMessage = {

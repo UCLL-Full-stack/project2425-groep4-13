@@ -1,3 +1,4 @@
+import { Role } from "../types";
 
 
 export class User {
@@ -5,12 +6,14 @@ export class User {
     private firstName: string;
     private lastName: string;
     private password: string;
+    private role: Role;
 
     constructor(user: {
         email: string;
         firstName: string;
         lastName: string;
         password: string;
+        role: Role;
     }) {
         this.validate(user);
 
@@ -18,6 +21,7 @@ export class User {
         this.firstName = user.firstName
         this.lastName = user.lastName
         this.password = user.password
+        this.role = user.role;
     }
 
     getEmail(): string | undefined {
@@ -36,11 +40,16 @@ export class User {
         return this.password;
     }
 
+    getRole(): Role {
+        return this.role;
+    }
+
     validate(user: {
         email: string;
         firstName: string;
         lastName: string;
         password: string;
+        role: Role;
     }) {
         if (!user.email?.trim()) {
             throw new Error('Email is required');
@@ -54,6 +63,9 @@ export class User {
         if (!user.password?.trim()) {
             throw new Error('Password is required');
         }
+        if (!user.role) {
+            throw new Error('Role is required');
+        }
     }
 
     equals(user: User): boolean {
@@ -61,7 +73,8 @@ export class User {
             this.email === user.getEmail() &&
             this.firstName === user.getFirstName() &&
             this.lastName === user.getLastName() &&
-            this.password === user.getPassword()
+            this.password === user.getPassword() &&
+            this.role === user.getRole()
         );
     }
 

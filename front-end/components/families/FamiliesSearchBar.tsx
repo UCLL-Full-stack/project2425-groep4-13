@@ -43,28 +43,21 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
             return;
         }
 
-        let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
-        loggedInUserEmail = "mike.doe@ucll.be";
-        if (!loggedInUserEmail) { // voor de zekerheid checken dat die bestaat
-            setError("No user is logged in");
-            return;
-        }
 
-        console.log("step1");
+        if (localStorage.getItem("loggedInUser") === null) { setError("No user is logged in"); return; } // als er nog geen user ingelogd is
+        const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 
 
         const response = await FamilyService.getFamilyByName(currentSearchTerm || "thiswillneverbeneeded");
         if (response.status === 200) {
-            console.log("step2");
 
             const family: Family = await response.json();
 
             const pushResponse = await FamilyService.addUserToFamily(family, loggedInUserEmail);
             if (pushResponse.status === 200) {
-                localStorage.setItem("Family", family.name);
+                localStorage.setItem("Family", JSON.stringify(family));
 
                 handleRequestedFamilyJoin();
-                console.log("YUP");
             } else {
                 setError("Something went wrong while adding user to family");
             }

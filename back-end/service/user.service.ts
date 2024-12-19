@@ -30,7 +30,14 @@ const createUser = async ({
     firstName,
     lastName,
     password,
+    role,
 }: UserInput): Promise<AuthenticationResponse> => {
+    if (!email) throw new Error("User email is required.");
+    if (!firstName) throw new Error("User first name is required.");
+    if (!lastName) throw new Error("User last name is required.");
+    if (!password) throw new Error("User password is required.");
+    if (!role) throw new Error("User role is required.");
+
     const existingUser = await userDb.getUserByEmail(email);
     if (existingUser) throw new Error(`User with email ${email} already exists.`);
 
@@ -40,18 +47,23 @@ const createUser = async ({
         firstName,
         lastName,
         password: hashedPassword,
+        role,
     });
 
     const newUser = await userDb.createUser(user);
     return {
-        token: generateJWTtoken(newUser.getEmail() || ''),
+        token: generateJWTtoken({email: newUser.getEmail() || '', role: newUser.getRole()}),
         email: newUser.getEmail() || '',
         fullname: `${newUser.getFirstName()} ${newUser.getLastName()}`,
+        role: user.getRole(),
     }
 };
 
 
 const authenticate = async ({ email, password }: UserInput): Promise<AuthenticationResponse> => {
+    if (!email) throw new Error("User email is required.");
+    if (!password) throw new Error("User password is required.");
+
     const user = await getUserByEmail(email);
     if (!user) {
         throw new Error(`User with e-mail: ${email} does not exist.`);
@@ -63,9 +75,10 @@ const authenticate = async ({ email, password }: UserInput): Promise<Authenticat
     }
 
     return {
-        token: generateJWTtoken(email),
+        token: generateJWTtoken({email, role: user.getRole()}),
         email,
         fullname: `${user.getFirstName()} ${user.getLastName()}`,
+        role: user.getRole(),
     }
 };
 

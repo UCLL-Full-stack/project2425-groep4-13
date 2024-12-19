@@ -37,6 +37,17 @@ const createFamily = (family: Family) => {
   });
 };
 
+// const createFamily = ({ name, members }: { name: string, members: { email: string }[] }) => {
+//   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
+//       method: "POST",
+
+//       headers: {
+//           "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ name, members }),
+//   });
+// };
+
 const addUserToFamily = (family: Family, userEmail: string) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/family/member", {
     method: "POST",

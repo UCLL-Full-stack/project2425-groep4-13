@@ -1,8 +1,11 @@
+type Role = 'owner' | 'parent' | 'child' | 'pending';
+
 type UserInput = {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    email?: string;
+    password?: string;
+    firstName?: string;
+    lastName?: string;
+    role?: Role;
 };
 
 type FamilyInput = {
@@ -20,6 +23,7 @@ type AuthenticationResponse = {
     token: string;
     email: string;
     fullname: string;
+    role: string;
 };
 
-export { UserInput, FamilyInput, AuthenticationResponse, JoinFamilyInput };
+export { UserInput, FamilyInput, AuthenticationResponse, JoinFamilyInput, Role };

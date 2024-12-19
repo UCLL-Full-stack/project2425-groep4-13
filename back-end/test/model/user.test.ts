@@ -5,19 +5,21 @@ const email = "john.doe@ucll.be";
 const firstName = "John";
 const lastName = "Doe";
 const password = "Secret123";
+const role = "owner";
 
 
 test("given: valid values for user, when: user is created, then: user is created with those values", () => {
     //given
 
     //when
-    const user = new User({ email: email, firstName: firstName, lastName: lastName, password: password });
+    const user = new User({ email: email, firstName: firstName, lastName: lastName, password: password, role: role });
 
     //then
     expect(user.getEmail()).toEqual(email);
     expect(user.getFirstName()).toEqual(firstName);
     expect(user.getLastName()).toEqual(lastName);
     expect(user.getPassword()).toEqual(password);
+    expect(user.getRole()).toEqual(role);
 });
 
 test("given: invalid email for user, when: user is created, then: error is thrown", () => {
@@ -25,7 +27,7 @@ test("given: invalid email for user, when: user is created, then: error is throw
     const invalidEmail = "";
 
     //when
-    const create = () => new User({ email: invalidEmail, firstName: firstName, lastName: lastName, password: password });
+    const create = () => new User({ email: invalidEmail, firstName: firstName, lastName: lastName, password: password, role: role });
 
     //then
     expect(create).toThrow("Email is required");
@@ -36,7 +38,7 @@ test("given: invalid first name for user, when: user is created, then: error is 
     const invalidFirstName = "";
 
     //when
-    const create = () => new User({ email: email, firstName: invalidFirstName, lastName: lastName, password: password });
+    const create = () => new User({ email: email, firstName: invalidFirstName, lastName: lastName, password: password, role: role });
 
     //then
     expect(create).toThrow("First name is required");
@@ -47,7 +49,7 @@ test("given: invalid last name for user, when: user is created, then: error is t
     const invalidLastName = "";
 
     //when
-    const create = () => new User({ email: email, firstName: firstName, lastName: invalidLastName, password: password });
+    const create = () => new User({ email: email, firstName: firstName, lastName: invalidLastName, password: password, role: role });
 
     //then
     expect(create).toThrow("Last name is required");
@@ -58,7 +60,7 @@ test("given: invalid password for user, when: user is created, then: error is th
     const invalidPassword = "";
 
     //when
-    const create = () => new User({ email: email, firstName: firstName, lastName: lastName, password: invalidPassword });
+    const create = () => new User({ email: email, firstName: firstName, lastName: lastName, password: invalidPassword, role: role });
 
     //then
     expect(create).toThrow("Password is required");

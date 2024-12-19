@@ -67,6 +67,7 @@ const Register: React.FC = () => {
             password,
             firstName,
             lastName,
+            role: "pending",
         };
         const response = await UserService.registerUser(user);
 
@@ -84,6 +85,7 @@ const Register: React.FC = () => {
                     token: user.token,
                     email: user.email,
                     fullname: user.fullname,
+                    role: user.role,
                 })
             );
             setTimeout(() => {

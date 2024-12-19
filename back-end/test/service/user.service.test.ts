@@ -1,19 +1,32 @@
 import { User } from '../../model/user';
 import userService from '../../service/user.service';
 import userDb from '../../repository/user.db';
-import { UserInput } from '../../types';
+import { Role, UserInput } from '../../types';
 import { be } from 'date-fns/locale';
 import { after } from 'node:test';
 
-const userInput: UserInput = {
+const userData = {
     email: 'john.doe@ucll.be',
     firstName: 'John',
     lastName: 'Doe',
     password: 'johnd123',
+    role: "owner" as Role,
+}
+
+const userInput: UserInput = {
+    email: userData.email,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    password: userData.password,
+    role: userData.role,
 };
 
 const user = new User({
-    ...userInput,
+    email: userData.email,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    password: userData.password,
+    role: userData.role,
 });
 
 
@@ -54,7 +67,7 @@ test("given: user in database, when: get user by email, then: return user", () =
     userDb.getUserByEmail = getUserByEmailMock;
 
     //when
-    const userByEmail = userService.getUserByEmail(userInput.email);
+    const userByEmail = userService.getUserByEmail(userInput.email!);
 
     //then
     expect(userByEmail).toEqual(user);
@@ -67,7 +80,7 @@ test("given: user not in database, when: get user by email, then: throw error", 
     userDb.getUserByEmail = getUserByEmailMock;
 
     //when
-    const getUserByEmail = () => userService.getUserByEmail(userInput.email);
+    const getUserByEmail = () => userService.getUserByEmail(userInput.email!);
 
     //then
     expect(getUserByEmail).toThrow(`User with email ${userInput.email} does not exist.`);
@@ -80,7 +93,7 @@ test("given: user in database, when: get user by first name, then: return user",
     userDb.getUserByFirstName = getUserByFirstNameMock;
 
     //when
-    const userByFirstName = userService.getUserByFirstName(userInput.firstName);
+    const userByFirstName = userService.getUserByFirstName(userInput.firstName!);
 
     //then
     expect(userByFirstName).toEqual(user);
@@ -93,7 +106,7 @@ test("given: user not in database, when: get user by first name, then: throw err
     userDb.getUserByFirstName = getUserByFirstNameMock;
 
     //when
-    const getUserByFirstName = () => userService.getUserByFirstName(userInput.firstName);
+    const getUserByFirstName = () => userService.getUserByFirstName(userInput.firstName!);
 
     //then
     expect(getUserByFirstName).toThrow(`User with first name ${userInput.firstName} does not exist.`);
@@ -106,7 +119,7 @@ test("given: user in database, when: get user by last name, then: return user", 
     userDb.getUserByLastName = getUserByLastNameMock;
 
     //when
-    const userByLastName = userService.getUserByLastName(userInput.lastName);
+    const userByLastName = userService.getUserByLastName(userInput.lastName!);
 
     //then
     expect(userByLastName).toEqual(user);
@@ -119,7 +132,7 @@ test("given: user not in database, when: get user by last name, then: throw erro
     userDb.getUserByLastName = getUserByLastNameMock;
 
     //when
-    const getUserByLastName = () => userService.getUserByLastName(userInput.lastName);
+    const getUserByLastName = () => userService.getUserByLastName(userInput.lastName!);
 
     //then
     expect(getUserByLastName).toThrow(`User with last name ${userInput.lastName} does not exist.`);
@@ -134,6 +147,11 @@ test("given: user not in database, when: create user, then: return created user"
 
     //when
     const createdUser = userService.createUser(userInput);
+
+    // console.log("created:");
+    // console.log(createdUser);
+    // console.log("expected:");
+    // console.log(user);
 
     //then
     expect(createdUser).toEqual(user);
