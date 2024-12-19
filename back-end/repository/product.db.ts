@@ -17,6 +17,21 @@ const getProductByName = async ({name}: {name: string}): Promise<Product | null>
     }
 }
 
+const createProduct = async (product: Product): Promise<Product> => {
+    try {
+        const productPrisma = await database.product.create({
+            data: {
+                name: product.getName(),
+            },
+        });
+        return Product.from(productPrisma);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
 export default {
     getProductByName,
+    createProduct,
 }
