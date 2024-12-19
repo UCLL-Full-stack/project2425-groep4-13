@@ -7,12 +7,6 @@ const users = [
         lastName: "Doe",
         password: "Secret123"
     }),
-    new User({
-        email: "mike.doe@ucll.be",
-        firstName: "Mike",
-        lastName: "Doe",
-        password: "Saaaaaaj"
-    })
 ];
 
 const getAllUsers = (): User[] => {

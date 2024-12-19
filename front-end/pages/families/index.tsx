@@ -77,28 +77,10 @@ const Families: React.FC = () => {
                     currentStep === "PendingFamilyApproval" && <p>Please wait until the family owner accepts your request to join their family. Refresh the page to check again.</p>
                 }
 
-                {/* <div className="centered">
-                    <button className="colored-button" onClick={openRegisterFamilyPrompt}>Add New Family</button>
-                </div>
-                {registerFamilyPromptOpen === true && <RegisterFamilyWindow closeRegisterFamilyPopup={closeRegisterFamilyPrompt}></RegisterFamilyWindow>} */}
+                {
+                    currentStep === "InFamily" && family && <FamiliesOverviewTable family={family} />
+                }
             </main>
-            {/* <main className="d-flex flex-column justify-content-center align-items-center">
-                <h1>Lecturers</h1>
-                <section>
-                    <h2>Lecturers overview</h2>
-                </section>
-                {
-                    lecturers && <LecturerOverviewTable lecturers={lecturers} selectLecturer={setSelectedLecturer} />
-                }
-                {
-                    selectedLecturer &&
-                    <>
-                        <h2>Courses taught by {selectedLecturer && `${selectedLecturer.user.firstName} ${selectedLecturer.user.lastName}`}</h2>
-                        <CourseOverviewTable lecturer={selectedLecturer} />
-                    </>
-
-                }
-            </main> */}
         </>
     );
 };
