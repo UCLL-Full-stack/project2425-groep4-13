@@ -18,9 +18,11 @@ const Families: React.FC = () => {
         const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
 
         const response = await FamilyService.checkAndGetFamilyByMemberEmail(loggedInUserEmail);
-        const familyData = await response.json();
         if (response.status === 200) { // als succesvolle fetch
+            const familyData = await response.json();
             if (familyData === null) { // als de user nog niet in een family zit
+                setFamily(null);
+            } else { // als user al in een family zit
                 setFamily(familyData);
             }
         } else { // als er een error is geweest
