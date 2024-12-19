@@ -1,4 +1,6 @@
 import { User } from "./user";
+import {Family as FamilyPrisma, User as UserPrisma} from '@prisma/client'
+
 
 export class Family {
     private id?: number;
@@ -57,5 +59,22 @@ export class Family {
             this.name === family.getName() &&
             this.members === family.getMembers()
         );
+    }
+
+    static from({ id, name, members, }: FamilyPrisma & {members: UserPrisma[];}) {
+        console.log("Family members data before mapping:", members);
+
+        const mappedMembers = members.map((member) => {
+            console.log("Mapping member in Family.from:", member); // Log each member object
+            return User.from(member); // Transform the member using User.from
+        });
+    
+        console.log("Mapped members in Family.from:", mappedMembers); // Log the resulting U
+
+        return new Family({
+            id,
+            name,
+            members: members.map((member) => User.from(member)),
+        });
     }
 }

@@ -5,25 +5,14 @@ import bcrypt from 'bcrypt';
 import { generateJWTtoken } from '../util/jwt';
 
 
-const getAllUsers = (): User[] => userDb.getAllUsers();
+const getAllUsers = async (): Promise<User[]> => userDb.getAllUsers();
 
-const getUserByEmail = (email: string): User | null => {
-    const user = userDb.getUserByEmail(email);
+const getUserByEmail = async ({ email }: { email: string }): Promise<User> => {
+    const user = await userDb.getUserByEmail({email});
     if (!user) throw new Error(`User with email ${email} does not exist.`);
     return user;
 };
 
-const getUserByFirstName = (firstName: string): User | null => {
-    const user = userDb.getUserByFirstName(firstName);
-    if (!user) throw new Error(`User with first name ${firstName} does not exist.`);
-    return user;
-};
-
-const getUserByLastName = (lastName: string): User | null => {
-    const user = userDb.getUserByLastName(lastName);
-    if (!user) throw new Error(`User with last name ${lastName} does not exist.`);
-    return user;
-};
 
 const createUser = async ({
     email,
@@ -38,7 +27,7 @@ const createUser = async ({
     if (!password) throw new Error("User password is required.");
     if (!role) throw new Error("User role is required.");
 
-    const existingUser = await userDb.getUserByEmail(email);
+    const existingUser = await userDb.getUserByEmail({email});
     if (existingUser) throw new Error(`User with email ${email} already exists.`);
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -64,7 +53,7 @@ const authenticate = async ({ email, password }: UserInput): Promise<Authenticat
     if (!email) throw new Error("User email is required.");
     if (!password) throw new Error("User password is required.");
 
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail({email});
     if (!user) {
         throw new Error(`User with e-mail: ${email} does not exist.`);
     }
@@ -85,8 +74,6 @@ const authenticate = async ({ email, password }: UserInput): Promise<Authenticat
 export default {
     getAllUsers,
     getUserByEmail,
-    getUserByFirstName,
-    getUserByLastName,
     createUser,
     authenticate,
 };

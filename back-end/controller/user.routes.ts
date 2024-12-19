@@ -112,76 +112,8 @@ userRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 userRouter.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const email = req.params.email;
-        const user = await userService.getUserByEmail(email);
+        const user = await userService.getUserByEmail({email});
         res.status(200).json(user);
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * @swagger
- * /users/firstName/{firstName}:
- *   get:
- *     summary: Get users by first name.
- *     parameters:
- *       - in: path
- *         name: firstName
- *         required: true
- *         description: The user's first name.
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: A list of users with the given first name.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- *       404:
- *         description: Users not found.
- */
-userRouter.get('/firstName/:firstName', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const firstName = req.params.firstName;
-        const users = await userService.getUserByFirstName(firstName);
-        res.status(200).json(users);
-    } catch (error) {
-        next(error);
-    }
-});
-
-/**
- * @swagger
- * /users/lastName/{lastName}:
- *   get:
- *     summary: Get users by last name.
- *     parameters:
- *       - in: path
- *         name: lastName
- *         required: true
- *         description: The user's last name.
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: A list of users with the given last name.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- *       404:
- *         description: Users not found.
- */
-userRouter.get('/lastName/:lastName', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const lastName = req.params.lastName;
-        const users = await userService.getUserByLastName(lastName);
-        res.status(200).json(users);
     } catch (error) {
         next(error);
     }

@@ -1,7 +1,10 @@
 import { Role } from "../types";
+import {User as UserPrisma} from '@prisma/client'
+
 
 
 export class User {
+    private id?: number;
     private email: string;
     private firstName: string;
     private lastName: string;
@@ -9,6 +12,7 @@ export class User {
     private role: Role;
 
     constructor(user: {
+        id?: number;
         email: string;
         firstName: string;
         lastName: string;
@@ -17,6 +21,7 @@ export class User {
     }) {
         this.validate(user);
 
+        this.id = user.id;
         this.email = user.email
         this.firstName = user.firstName
         this.lastName = user.lastName
@@ -24,7 +29,11 @@ export class User {
         this.role = user.role;
     }
 
-    getEmail(): string | undefined {
+    getId(): number | undefined {
+        return this.id;
+    }
+    
+    getEmail(): string {
         return this.email;
     }
 
@@ -76,6 +85,17 @@ export class User {
             this.password === user.getPassword() &&
             this.role === user.getRole()
         );
+    }
+
+    static from({ id, email, firstName, lastName, password, role }: UserPrisma) {
+        return new User({
+            id,
+            email,
+            firstName,
+            lastName,
+            password,
+            role: role as Role,
+        });
     }
 
 

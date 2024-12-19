@@ -6,16 +6,16 @@ import userDb from "../repository/user.db";
 import { memoryUsage } from "process";
 
 
-const getAllFamilies = (): Family[] => familyDb.getAllFamilies();
+const getAllFamilies = async (): Promise<Family[]> => familyDb.getAllFamilies();
 
-const getFamilyByName = (name: string): Family | null => {
-    const family = familyDb.getFamilyByName(name);
+const getFamilyByName = async (name: string): Promise<Family | null> => {
+    const family = await familyDb.getFamilyByName({name});
     if (!family) throw new Error(`Family with name ${name} does not exist.`);
     return family;
 };
 
-const getFamilyByMember = (memberEmail: string): Family => {
-    const family = familyDb.getFamilyByMember(memberEmail);
+const getFamilyByMember = async (memberEmail: string): Promise<Family> => {
+    const family = await familyDb.getFamilyByMember({email: memberEmail});
     if (!family) throw new Error(`No family found for member ${memberEmail}.`);
     return family;
 }
@@ -24,14 +24,14 @@ const createFamily = async ({
     name,
     members,
 }: FamilyInput): Promise<Family> => {
-    const existingFamily = familyDb.getFamilyByName(name);
+    const existingFamily = await familyDb.getFamilyByName({name});
     if (existingFamily) throw new Error(`Family with name ${name} already exists.`);
 
     // lijst van Users maken uit de lijst met UserInputs via hun email
     const membersAsUsers = await Promise.all(
         members.map(async (member) => {
             if (!member.email) throw new Error("User email is required");
-            const user = await userDb.getUserByEmail(member.email);
+            const user = await userDb.getUserByEmail({email: member.email});
             if (!user) throw new Error(`User with email ${member.email} not found`);
             return user;
         })
@@ -42,7 +42,7 @@ const createFamily = async ({
         members: membersAsUsers,
     });
 
-    return familyDb.createFamily(family);
+    return await familyDb.createFamily(family);
 };
 
 // functie om een member toe te voegen aan een familie (zijn role zal nog "pending" zijn tot een familie administrator de request accepteert)
@@ -56,9 +56,9 @@ const addMemberToFamily = async (
     if (!userInput.email) throw new Error("User email is requird.");
 
     //TODO aanpassen naar id
-    const family = await familyDb.getFamilyByName(familyInput.name); // juiste family fetchen
+    const family = await familyDb.getFamilyByName({name: familyInput.name}); // juiste family fetchen
 
-    const user = await userDb.getUserByEmail(userInput.email); // juiste user fetchen
+    const user = await userDb.getUserByEmail({email: userInput.email}); // juiste user fetchen
 
 
     if (!family) {
