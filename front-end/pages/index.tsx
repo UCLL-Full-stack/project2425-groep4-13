@@ -14,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <Header />
-      <main className="bg-black">
+      <main>
         <h1 className="text-3xl font-bold underline">FreshTrack Home</h1>
 
         {/* gewoon enkele dingen voor styling, van zodra die op andere plekken gebruikt worden mogen ze weg*/}
