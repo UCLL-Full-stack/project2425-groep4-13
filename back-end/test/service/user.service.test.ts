@@ -1,7 +1,7 @@
 import { User } from '../../model/user';
 import userService from '../../service/user.service';
 import userDb from '../../repository/user.db';
-import { UserInput } from '../../types';
+import { Role, UserInput } from '../../types';
 import { be } from 'date-fns/locale';
 import { after } from 'node:test';
 
@@ -10,6 +10,7 @@ const userData = {
     firstName: 'John',
     lastName: 'Doe',
     password: 'johnd123',
+    role: "owner" as Role,
 }
 
 const userInput: UserInput = {
@@ -17,6 +18,7 @@ const userInput: UserInput = {
     firstName: userData.firstName,
     lastName: userData.lastName,
     password: userData.password,
+    role: userData.role,
 };
 
 const user = new User({
@@ -24,6 +26,7 @@ const user = new User({
     firstName: userData.firstName,
     lastName: userData.lastName,
     password: userData.password,
+    role: userData.role,
 });
 
 

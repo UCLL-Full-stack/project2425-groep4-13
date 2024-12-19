@@ -1,5 +1,5 @@
 import { User } from "../../model/user";
-import { UserInput } from "../../types";
+import { Role, UserInput } from "../../types";
 import { Family } from "../../model/family";
 import familyService from "../../service/family.service";
 import familyDb from "../../repository/family.db";
@@ -10,6 +10,7 @@ const userData1 = {
     firstName: 'John',
     lastName: 'Doe',
     password: 'johnd123',
+    role: 'owner' as Role,
 }
 
 const userData2 = {
@@ -17,6 +18,7 @@ const userData2 = {
     firstName: 'Jane',
     lastName: 'Doe',
     password: 'janed123',
+    role: 'owner' as Role,
 }
 
 const userData3 = {
@@ -24,6 +26,7 @@ const userData3 = {
     firstName: 'Play',
     lastName: 'Doe',
     password: 'playd123',
+    role: 'owner' as Role,
 }
 
 const userInput1: UserInput = {
@@ -31,6 +34,7 @@ const userInput1: UserInput = {
     firstName: userData1.firstName,
     lastName: userData1.lastName,
     password: userData1.password,
+    role: userData1.role,
 };
 
 const userInput2: UserInput = {
@@ -38,6 +42,7 @@ const userInput2: UserInput = {
     firstName: userData2.firstName,
     lastName: userData2.lastName,
     password: userData2.password,
+    role: userData2.role,
 };
 
 const userInput3: UserInput = {
@@ -45,6 +50,7 @@ const userInput3: UserInput = {
     firstName: userData3.firstName,
     lastName: userData3.lastName,
     password: userData3.password,
+    role: userData3.role,
 };
 
 const user1 = new User({
@@ -52,6 +58,7 @@ const user1 = new User({
     firstName: userData1.firstName,
     lastName: userData1.lastName,
     password: userData1.password,
+    role: userData1.role,
 });
 
 
@@ -60,6 +67,7 @@ const user2 = new User({
     firstName: userData2.firstName,
     lastName: userData2.lastName,
     password: userData2.password,
+    role: userData2.role,
 });
 
 const user3 = new User({
@@ -67,6 +75,7 @@ const user3 = new User({
     firstName: userData3.firstName,
     lastName: userData3.lastName,
     password: userData3.password,
+    role: userData3.role,
 });
 
 

@@ -11,18 +11,21 @@ const families = [
                 firstName: "John",
                 lastName: "Doe",
                 password: "Secret123",
+                role: "owner",
             }),
             new User({
                 email: "jane.doe@ucll.be",
                 firstName: "Jane",
                 lastName: "Doe",
                 password: "Secret123",
+                role: "parent",
             }),
             new User({
                 email: "play.doe@ucll.be",
                 firstName: "Play",
                 lastName: "Doe",
                 password: "Secret123",
+                role: "child",
             })
         ]
     }),
@@ -40,12 +43,14 @@ const families = [
                 firstName: "Jane",
                 lastName: "Smith",
                 password: "Secret123",
+                role: "owner",
             }),
             new User({
                 email: "baby.smith@ucll.be",
                 firstName: "Baby",
                 lastName: "Smith",
                 password: "Secret123",
+                role: "parent",
             })
         ]
     })

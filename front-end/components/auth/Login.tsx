@@ -63,6 +63,7 @@ const Login: React.FC = () => {
                     token: user.token,
                     email: user.email,
                     fullname: user.fullname,
+                    role: user.role,
                 })
             );
             setTimeout(() => {

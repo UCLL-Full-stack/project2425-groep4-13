@@ -6,6 +6,7 @@ const user1 = new User({
     firstName: "John",
     lastName: "Doe",
     password: "Secret123",
+    role: "owner",
 });
 
 const user2 = new User({
@@ -13,6 +14,7 @@ const user2 = new User({
     firstName: "Jane",
     lastName: "Doe",
     password: "Secret123",
+    role: "owner",
 });
 
 const user3 = new User({
@@ -20,6 +22,7 @@ const user3 = new User({
     firstName: "Play",
     lastName: "Doe",
     password: "Secret123",
+    role: "owner",
 });
 
 const family1 = new Family({
