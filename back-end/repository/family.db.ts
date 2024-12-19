@@ -64,6 +64,10 @@ const getAllFamilies = async (): Promise<Family[]> => {
                 members: true,
             }
         });
+
+        // Check the data you get from Prisma
+        console.log(JSON.stringify(familiesPrisma));
+
         return familiesPrisma.map((familyPrisma) => Family.from(familyPrisma));
     } catch (error) {
         console.error(error);

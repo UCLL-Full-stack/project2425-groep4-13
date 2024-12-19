@@ -80,9 +80,9 @@ const familyRouter = express.Router();
  *               items:
  *                  $ref: '#/components/schemas/Family'
  */
-familyRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
+familyRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).json(familyService.getAllFamilies());
+        res.status(200).json(await familyService.getAllFamilies());
     } catch (error) {
         next(error);
     }
@@ -108,9 +108,9 @@ familyRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
  *             schema:
  *               $ref: '#/components/schemas/Family'
  */
-familyRouter.get('/:name', (req: Request, res: Response, next: NextFunction) => {
+familyRouter.get('/:name', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).json(familyService.getFamilyByName(req.params.name));
+        res.status(200).json(await familyService.getFamilyByName(req.params.name));
     } catch (error) {
         next(error);
     }
@@ -136,9 +136,9 @@ familyRouter.get('/:name', (req: Request, res: Response, next: NextFunction) => 
  *             schema:
  *               $ref: '#/components/schemas/Family'
  */
-familyRouter.get('/member/:memberEmail', (req: Request, res: Response, next: NextFunction) => {
+familyRouter.get('/member/:memberEmail', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).json(familyService.getFamilyByMember(req.params.memberEmail));
+        res.status(200).json(await familyService.getFamilyByMember(req.params.memberEmail));
     } catch (error) {
         next(error);
     }
