@@ -13,13 +13,15 @@ const Families: React.FC = () => {
     const [currentStep, setCurrentStep] = useState<String>(); // om te weten in welke stap de user zit
 
     const getFamily = async () => {
-        const response = await FamilyService.getFamilyByMemberEmail("mike.doe@ucll.be");
+        if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
+
+        const loggedInUserEmail = JSON.parse(localStorage.getItem("loggedInUser")!).email;
+
+        const response = await FamilyService.getFamilyByMemberEmail(loggedInUserEmail);
         if (response.status === 200) { // als succesvolle fetch, dan zit de user dus in een family
             const json: Family = await response.json();
             setFamily(json);
         } else { // dan zit de user niet in een familie
-            console.log("status is:");
-            console.log(response.status);
             setFamily(null);
         }
     }
@@ -27,7 +29,6 @@ const Families: React.FC = () => {
     // use effect die moet runnen wanneer de pagina voor het eerst geopend wordt
     // moet zo met 2 aparte useEffects want setFamily gebeurt niet instant, maar die variabele is wel nodig om de pagina te renderen
     useEffect(() => {
-        console.log("this running");
         getFamily();
     }, []);
 
@@ -46,11 +47,14 @@ const Families: React.FC = () => {
     }, [family]);
 
     // functies om de currentStep aan te passen via andere components (dus die worden doorgegeven als callbacks)
-    const showFamilyRegisterWindow = () => { setCurrentStep("RegisterNewFamily") } // als user optie "register new family" kiest
-    const handleFamilyRegistered = () => { setCurrentStep("InFamily"); } // als user een nieuwe family heeft geregisterd
+    const showFamilyRegisterWindow = () => { setCurrentStep("RegisterNewFamily"); } // als user optie "register new family" kiest
+    const handleFamilyRegistered = (family: Family) => { // als user een nieuwe family heeft geregisterd
+        setCurrentStep("InFamily");
+        setFamily(family);
+    }
 
-    const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily") } // als user optie "join existing family" kiest
-    const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval") } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
+    const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily"); } // als user optie "join existing family" kiest
+    const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval"); } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
 
     return (
         <>

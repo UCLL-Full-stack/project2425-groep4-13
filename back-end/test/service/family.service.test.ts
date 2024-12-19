@@ -5,37 +5,68 @@ import familyService from "../../service/family.service";
 import familyDb from "../../repository/family.db";
 import { FamilyInput } from "../../types";
 
-const userInput1: UserInput = {
+const userData1 = {
     email: 'john.doe@ucll.be',
     firstName: 'John',
     lastName: 'Doe',
     password: 'johnd123',
-};
+}
 
-const userInput2: UserInput = {
+const userData2 = {
     email: 'jane.doe@ucll.be',
     firstName: 'Jane',
     lastName: 'Doe',
     password: 'janed123',
-};
+}
 
-const userInput3: UserInput = {
+const userData3 = {
     email: 'play.doe@ucll.be',
     firstName: 'Play',
     lastName: 'Doe',
     password: 'playd123',
+}
+
+const userInput1: UserInput = {
+    email: userData1.email,
+    firstName: userData1.firstName,
+    lastName: userData1.lastName,
+    password: userData1.password,
+};
+
+const userInput2: UserInput = {
+    email: userData2.email,
+    firstName: userData2.firstName,
+    lastName: userData2.lastName,
+    password: userData2.password,
+};
+
+const userInput3: UserInput = {
+    email: userData3.email,
+    firstName: userData3.firstName,
+    lastName: userData3.lastName,
+    password: userData3.password,
 };
 
 const user1 = new User({
-    ...userInput1,
+    email: userData1.email,
+    firstName: userData1.firstName,
+    lastName: userData1.lastName,
+    password: userData1.password,
 });
 
+
 const user2 = new User({
-    ...userInput2,
+    email: userData2.email,
+    firstName: userData2.firstName,
+    lastName: userData2.lastName,
+    password: userData2.password,
 });
 
 const user3 = new User({
-    ...userInput3,
+    email: userData3.email,
+    firstName: userData3.firstName,
+    lastName: userData3.lastName,
+    password: userData3.password,
 });
 
 
@@ -108,7 +139,7 @@ test("given: family in database, when: get family by member, then: return family
     familyDb.getFamilyByMember = getFamilyByMemberMock;
 
     //when
-    const familiesByMember = familyService.getFamilyByMember(userInput1.email);
+    const familiesByMember = familyService.getFamilyByMember(userInput1.email!);
 
     //then
     expect(familiesByMember).toEqual(family);
@@ -121,7 +152,7 @@ test("given: family not in database, when: get family by member, then: throw err
     familyDb.getFamilyByMember = getFamilyByMemberMock;
 
     //when
-    const getFamiliesByMember = () => familyService.getFamilyByMember(userInput1.email);
+    const getFamiliesByMember = () => familyService.getFamilyByMember(userInput1.email!);
 
     //then
     expect(getFamiliesByMember).toThrow(`No family found for member ${userInput1.email}.`);
