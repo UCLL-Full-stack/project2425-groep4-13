@@ -50,11 +50,14 @@ const Families: React.FC = () => {
     }, [family]);
 
     // functies om de currentStep aan te passen via andere components (dus die worden doorgegeven als callbacks)
-    const showFamilyRegisterWindow = () => { setCurrentStep("RegisterNewFamily") } // als user optie "register new family" kiest
-    const handleFamilyRegistered = () => { setCurrentStep("InFamily"); } // als user een nieuwe family heeft geregisterd
+    const showFamilyRegisterWindow = () => { setCurrentStep("RegisterNewFamily"); } // als user optie "register new family" kiest
+    const handleFamilyRegistered = (family: Family) => { // als user een nieuwe family heeft geregisterd
+        setCurrentStep("InFamily");
+        setFamily(family);
+    }
 
-    const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily") } // als user optie "join existing family" kiest
-    const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval") } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
+    const showFamilySearchWindow = () => { setCurrentStep("JoinExistingFamily"); } // als user optie "join existing family" kiest
+    const handleRequestedFamilyJoin = () => { setCurrentStep("PendingFamilyApproval"); } // als user heeft een familie gejoined en dus moet wachten tot iemand hem accepteerd
 
     return (
         <>
