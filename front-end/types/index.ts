@@ -25,3 +25,10 @@ export type Item = {
     amount: number,
     expirationDate: Date,
 }
+
+// type voor een groep items met zelfde product
+export type ItemGroup = {
+    product: Product,
+    firstExpirationDate: Date,
+    items: Item[],
+}
