@@ -1,6 +1,7 @@
 type Role = 'owner' | 'parent' | 'child' | 'pending';
 
 type UserInput = {
+    id?: number;
     email?: string;
     password?: string;
     firstName?: string;
@@ -9,6 +10,7 @@ type UserInput = {
 };
 
 type FamilyInput = {
+    id?: number;
     name: string;
     members: UserInput[];
 };
@@ -20,10 +22,12 @@ type JoinFamilyInput = {
 }
 
 type ProductInput = {
+    id?: number;
     name: string;
 }
 
-type Item = {
+type ItemInput = {
+    id?: number;
     product: ProductInput;
     amount: number;
     expirationDate: Date;
@@ -42,5 +46,6 @@ export {
     AuthenticationResponse,
     JoinFamilyInput,
     Role,
-    ProductInput
+    ProductInput,
+    ItemInput,
 };

@@ -7,6 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 import { userRouter } from './controller/user.routes';
 import { familyRouter } from './controller/family.routes';
 import { productRouter } from './controller/product.routes';
+import { itemRouter } from './controller/item.routes';
 import { expressjwt } from 'express-jwt';
 
 import helmet from 'helmet';
@@ -28,6 +29,7 @@ app.use('/users', userRouter);
 app.use('/family', familyRouter);
 
 app.use('/product', productRouter);
+app.use('/item', itemRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'Back-end is running...' });

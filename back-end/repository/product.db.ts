@@ -5,6 +5,18 @@ import database from './database';
 
 // }
 
+const getProductById = async ({id}: {id: number}): Promise<Product | null> => {
+    try {
+        const productPrisma = await database.product.findUnique({
+            where: {id},
+        })
+        return productPrisma ? Product.from(productPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
 const getProductByName = async ({name}: {name: string}): Promise<Product | null> => {
     try {
         const productPrisma = await database.product.findUnique({
@@ -32,6 +44,7 @@ const createProduct = async (product: Product): Promise<Product> => {
 }
 
 export default {
+    getProductById,
     getProductByName,
     createProduct,
 }

@@ -61,7 +61,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import familyService from '../service/family.service';
 import { FamilyInput, JoinFamilyInput, UserInput } from '../types';
-import userService from '../service/user.service';
 
 const familyRouter = express.Router();
 
