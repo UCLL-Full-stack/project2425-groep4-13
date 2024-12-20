@@ -6,6 +6,8 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { userRouter } from './controller/user.routes';
 import { familyRouter } from './controller/family.routes';
+import { productRouter } from './controller/product.routes';
+import { itemRouter } from './controller/item.routes';
 import { expressjwt } from 'express-jwt';
 
 import helmet from 'helmet';
@@ -20,9 +22,14 @@ const port = process.env.APP_PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+
+
 app.use('/users', userRouter);
 
 app.use('/family', familyRouter);
+
+app.use('/product', productRouter);
+app.use('/item', itemRouter);
 
 app.get('/status', (req, res) => {
     res.json({ message: 'Back-end is running...' });
@@ -62,6 +69,7 @@ app.use(
         secret: process.env.JWT_SECRET || 'default_secret',
         algorithms: ['HS256'],
     }).unless({
-        path: ['/status', '/api-docs', '/users/login, users/signup'],
+        path: ['/api-docs', /^\/api-docs\/.*/, '/users/login', '/users/signup', '/status'],
     })
 );
+

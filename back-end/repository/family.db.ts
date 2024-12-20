@@ -4,69 +4,69 @@ import bcrypt from "bcrypt";
 import e from "express";
 import database from "./database";
 
-const initializeDevFamilies = async () => {
-    const hashedPassword = await bcrypt.hash("Secret123", 12);
+// const initializeDevFamilies = async () => {
+//     const hashedPassword = await bcrypt.hash("Secret123", 12);
 
-    const families = [
-        new Family({
-            name: "Doe",
-            members: [
-                new User({
-                    email: "john.doe@ucll.be",
-                    firstName: "John",
-                    lastName: "Doe",
-                    password: hashedPassword,
-                    role: "owner",
-                }),
-                new User({
-                    email: "jane.doe@ucll.be",
-                    firstName: "Jane",
-                    lastName: "Doe",
-                    password: hashedPassword,
-                    role: "parent",
-                }),
-                new User({
-                    email: "play.doe@ucll.be",
-                    firstName: "Play",
-                    lastName: "Doe",
-                    password: hashedPassword,
-                    role: "child",
-                })
-            ]
-        }),
-        new Family({
-            name: "Smith",
-            members: [
-                // new User({
-                //     email: "john.doe@ucll.be",
-                //     firstName: "John",
-                //     lastName: "Doe",
-                //     password: "Secret123",
-                // }),
-                new User({
-                    email: "jane.smith@ucll.be",
-                    firstName: "Jane",
-                    lastName: "Smith",
-                    password: hashedPassword,
-                    role: "owner",
-                }),
-                new User({
-                    email: "baby.smith@ucll.be",
-                    firstName: "Baby",
-                    lastName: "Smith",
-                    password: hashedPassword,
-                    role: "parent",
-                })
-            ]
-        })
-    ];
-    return families;
-};
+//     const families = [
+//         new Family({
+//             name: "Doe",
+//             members: [
+//                 new User({
+//                     email: "john.doe@ucll.be",
+//                     firstName: "John",
+//                     lastName: "Doe",
+//                     password: hashedPassword,
+//                     role: "owner",
+//                 }),
+//                 new User({
+//                     email: "jane.doe@ucll.be",
+//                     firstName: "Jane",
+//                     lastName: "Doe",
+//                     password: hashedPassword,
+//                     role: "parent",
+//                 }),
+//                 new User({
+//                     email: "play.doe@ucll.be",
+//                     firstName: "Play",
+//                     lastName: "Doe",
+//                     password: hashedPassword,
+//                     role: "child",
+//                 })
+//             ]
+//         }),
+//         new Family({
+//             name: "Smith",
+//             members: [
+//                 // new User({
+//                 //     email: "john.doe@ucll.be",
+//                 //     firstName: "John",
+//                 //     lastName: "Doe",
+//                 //     password: "Secret123",
+//                 // }),
+//                 new User({
+//                     email: "jane.smith@ucll.be",
+//                     firstName: "Jane",
+//                     lastName: "Smith",
+//                     password: hashedPassword,
+//                     role: "owner",
+//                 }),
+//                 new User({
+//                     email: "baby.smith@ucll.be",
+//                     firstName: "Baby",
+//                     lastName: "Smith",
+//                     password: hashedPassword,
+//                     role: "parent",
+//                 })
+//             ]
+//         })
+//     ];
+//     return families;
+// };
 
-let families: Family[] = [];
-initializeDevFamilies().then((result) => {
-    families = result;
-});
+// let families: Family[] = [];
+// initializeDevFamilies().then((result) => {
+//     families = result;
+// });
 
 const getAllFamilies = async (): Promise<Family[]> => {
     try {
@@ -75,9 +75,6 @@ const getAllFamilies = async (): Promise<Family[]> => {
                 members: true,
             }
         });
-
-        // Check the data you get from Prisma
-        console.log(JSON.stringify(familiesPrisma));
 
         return familiesPrisma.map((familyPrisma) => Family.from(familyPrisma));
     } catch (error) {
