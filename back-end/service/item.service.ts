@@ -31,9 +31,6 @@ const createItem = async ({
     if (!amount) throw new Error("Amount is required.");
     if (!expirationDate) throw new Error("Expiration date is required.");
 
-    console.log("ITEM ITEM ITEM");
-    console.log(productInput);
-
     if (!productInput.name) throw new Error("Product name is required.");
 
 

@@ -125,8 +125,6 @@ const addItemToFamily = async (
     {family: familyInput, item: itemInput}:
     {family: FamilyInput; item: ItemInput; }
 ): Promise<Item | null> => {
-    console.log("HELLOO SIGMAS");
-    console.log(itemInput);
     if (!familyInput.name) throw new Error("Family name is required.");
     if (!itemInput.id) throw new Error("Item id is required.");
 
