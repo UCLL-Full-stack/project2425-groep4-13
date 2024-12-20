@@ -1,4 +1,5 @@
-// Execute: npx ts-node util/seed.ts
+// Execute:
+//npx ts-node util/seed.ts
 
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -95,6 +96,44 @@ const main = async () => {
             }
         },
     });
+
+
+
+    // products
+    const productEgg = await prisma.product.create({
+        data: {
+            name: "Egg",
+        },
+    });
+
+    const productCheese = await prisma.product.create({
+        data: {
+            name: "Cheese",
+        },
+    });
+
+    // items
+    // MERK OP, die datum set() functie, als je daar month doet dat begint te tellen vanaf 0
+    // dus januari = 0, december = 11
+    const itemEggs = await prisma.item.create({
+        data: {
+            product: {
+                connect: productEgg,
+            },
+            amount: 5,
+            expirationDate: set(new Date(), { date: 29 , month: 11, year: 2024}),
+        }
+    })
+
+    const itemCheese = await prisma.item.create({
+        data: {
+            product: {
+                connect: productCheese,
+            },
+            amount: 2,
+            expirationDate: set(new Date(), { date: 30 , month: 11, year: 2024}),
+        }
+    })
 
 }
 

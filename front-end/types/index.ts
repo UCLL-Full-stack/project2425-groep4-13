@@ -15,3 +15,13 @@ export type StatusMessage = {
     message: string;
     type: "error" | "success";
 };
+
+export type Product = {
+    name: string,
+}
+
+export type Item = {
+    product: Product,
+    amount: number,
+    expirationDate: Date,
+}

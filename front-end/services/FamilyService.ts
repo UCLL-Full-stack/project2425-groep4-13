@@ -50,8 +50,8 @@ const checkAndGetFamilyByName = async (familyName: string) => {
   );
 }
 
-const createFamily = (family: Family) => {
-  return fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
+const createFamily = async (family: Family) => {
+  return await fetch(process.env.NEXT_PUBLIC_API_URL + "/family", {
       method: "POST",
 
       headers: {
