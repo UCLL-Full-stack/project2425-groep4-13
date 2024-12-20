@@ -86,7 +86,8 @@ const familyInput: FamilyInput = {
 
 const family = new Family({
     name: 'Doe',
-    members: [user1, user2, user3]
+    members: [user1, user2, user3],
+    items: []
 });
 
 let getAllFamiliesMock: jest.Mock;

@@ -84,7 +84,7 @@ const main = async () => {
             name: "Doe",
             members: {
                 connect: [{id: userJohndoe.id}, {id: userJanedoe.id}, {id: userPlaydoe.id}]
-            }
+            },
         },
     });
 

@@ -13,6 +13,7 @@ type FamilyInput = {
     id?: number;
     name: string;
     members: UserInput[];
+    items: ItemInput[];
 };
 
 // DTO voor als een user een family wil joinen

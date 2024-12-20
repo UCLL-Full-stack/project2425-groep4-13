@@ -3,6 +3,20 @@ import { Product } from '../model/product';
 import database from './database';
 import productDb from './product.db';
 
+const getItemById = async ({ id }: { id: number }): Promise<Item | null> => {
+    try {
+        const itemPrisma = await database.item.findUnique({
+            where: { id },
+            include: { product: true },
+        });
+
+        return itemPrisma ? Item.from(itemPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
 const getallItems = async (): Promise<Item[]> => {
     try {
         const itemsPrisma = await database.item.findMany({
@@ -69,6 +83,7 @@ const getAllItemsOrderByDate = async (): Promise<Item[]> => {
 //     }
 // }
 
+
 const createItem = async(item: Item): Promise<Item> => {
     try {
         const itemPrisma = await database.item.create({
@@ -91,6 +106,7 @@ const createItem = async(item: Item): Promise<Item> => {
 }
 
 export default {
+    getItemById,
     getallItems,
     getAllItemsOrderByDate,
     createItem,

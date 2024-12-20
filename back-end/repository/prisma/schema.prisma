@@ -25,6 +25,7 @@ model Family {
     id      Int    @id @default(autoincrement())
     name    String @unique
     members User[]
+    items   Item[]
 }
 
 model Product {
@@ -39,4 +40,6 @@ model Item {
     product        Product  @relation(fields: [productId], references: [id])
     amount         Int
     expirationDate DateTime
+    Family         Family?  @relation(fields: [familyId], references: [id])
+    familyId       Int?
 }

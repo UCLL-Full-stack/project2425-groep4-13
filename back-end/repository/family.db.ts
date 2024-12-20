@@ -73,6 +73,11 @@ const getAllFamilies = async (): Promise<Family[]> => {
         const familiesPrisma = await database.family.findMany({
             include: {
                 members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
             }
         });
 
@@ -89,6 +94,11 @@ const getFamilyByName = async ({name} : {name: string}): Promise<Family | null> 
             where: {name},
             include: {
                 members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
             }
         });
         return familyPrisma ? Family.from(familyPrisma) : null;
@@ -97,6 +107,30 @@ const getFamilyByName = async ({name} : {name: string}): Promise<Family | null> 
         throw new Error('Database error. See server log for details.');
     }
 };
+
+// const getFamilyById = async ({ id }: { id: number }): Promise<Family | null> => {
+//     try {
+//         const familyPrisma = await database.family.findUnique({
+//             where: {id},
+//             include: {
+//                 members: true,
+//                 items: {
+//                     include: {
+//                         product: true
+//                     }
+//                 },
+//             }
+//         });
+//         if (!familyPrisma) {
+//             return null;
+//         }
+
+//         return familyPrisma ? Family.from(familyPrisma): null;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Database error. See server log for details.');
+//     }
+// };
 
 const getFamilyByMember = async ({ email }: { email: string }): Promise<Family | null> => {
     try {
@@ -110,6 +144,11 @@ const getFamilyByMember = async ({ email }: { email: string }): Promise<Family |
             },
             include: {
                 members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
             },
         });
 
@@ -131,6 +170,11 @@ const createFamily = async (family: Family): Promise<Family> => {
             },
             include:{
                 members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
             }
             
 
@@ -147,4 +191,5 @@ export default {
     getFamilyByName,
     getFamilyByMember,
     createFamily,
+    // getFamilyById,
 };

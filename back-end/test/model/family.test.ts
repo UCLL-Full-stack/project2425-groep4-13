@@ -27,17 +27,19 @@ const user3 = new User({
 
 const family1 = new Family({
     name: "Doe",
-    members: [user1, user2, user3]
+    members: [user1, user2, user3],
+    items: [],
 });
 
 test("given: valid values for family, when: family is created, then: family is created with those values", () => {
     //given
 
     //when
-    const family = new Family({ name: "Doe", members: [user1, user2, user3] });
+    const family = new Family({ name: "Doe", members: [user1, user2, user3], items: [] });
     //then
     expect(family.getName()).toEqual("Doe");
-    expect(family1.getMembers()).toEqual([user1, user2, user3]);
+    expect(family.getMembers()).toEqual([user1, user2, user3]);
+    expect(family.getItems()).toEqual([]);
 });
 
 test("given: invalid name for family, when: family is created, then: error is thrown", () => {
@@ -45,7 +47,7 @@ test("given: invalid name for family, when: family is created, then: error is th
     const invalidName = "";
 
     //when
-    const create = () => new Family({ name: invalidName, members: [user1, user2, user3] });
+    const create = () => new Family({ name: invalidName, members: [user1, user2, user3], items: [] });
 
     //then
     expect(create).toThrow("Name is required");
@@ -55,7 +57,7 @@ test("given: invalid members for family, when: family is created, then: error is
     //given
 
     //when
-    const create = () => new Family({ name: "Doe", members: [] });
+    const create = () => new Family({ name: "Doe", members: [], items: [] });
 
     //then
     expect(create).toThrow("Members are required");

@@ -4,6 +4,7 @@ import familyDb from "../repository/family.db";
 import { FamilyInput, UserInput } from "../types";
 import userDb from "../repository/user.db";
 import { memoryUsage } from "process";
+import itemDb from "../repository/item.db";
 
 
 const getAllFamilies = async (): Promise<Family[]> => familyDb.getAllFamilies();
@@ -13,6 +14,12 @@ const getFamilyByName = async (name: string): Promise<Family | null> => {
     if (!family) throw new Error(`Family with name ${name} does not exist.`);
     return family;
 };
+
+// const getFamilyById = async(id: number): Promise<Family | null> => {
+//     const family = await familyDb.getFamilyById({id});
+//     if (!family) throw new Error(`Family with id ${id} does not exist.`);
+//     return family;
+// }
 
 // functie om te checken of een familie bestaat, indien nee, dan null returnen in plaats van een error gooien
 const checkAndGetFamilyByName = async (name: string): Promise<Family | null> => {
@@ -44,6 +51,7 @@ const checkAndGetFamilyByMember = async (memberEmail: string): Promise<Family | 
 const createFamily = async ({
     name,
     members,
+    items,
 }: FamilyInput): Promise<Family> => {
     const existingFamily = await familyDb.getFamilyByName({name});
     if (existingFamily) throw new Error(`Family with name ${name} already exists.`);
@@ -58,9 +66,19 @@ const createFamily = async ({
         })
     );
 
+    const itemObjects = await Promise.all(
+        items.map(async (item) => {
+            if (!item.product) throw new Error("Item product is required");
+            const itemObject = await itemDb.getItemById({id: item.id!})
+            if(!itemObject) throw new Error(`Item with id ${item.id} not found`);
+            return itemObject;
+        })
+    )
+
     const family = new Family({
         name,
         members: membersAsUsers,
+        items: itemObjects,
     });
 
     return await familyDb.createFamily(family);
