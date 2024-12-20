@@ -58,7 +58,7 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
 
             const pushResponse = await FamilyService.addUserToFamily(family, loggedInUserEmail);
             if (pushResponse.status === 200) {
-                localStorage.setItem("Family", JSON.stringify(family.name));
+                localStorage.setItem("Family", family.name);
 
                 handleRequestedFamilyJoin();
             } else {

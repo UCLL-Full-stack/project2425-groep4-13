@@ -50,6 +50,17 @@ export class Family {
         return member
     }
 
+    addItemToFamily(item: Item): Item {
+        if (!item) throw new Error("Item is required");
+        if (this.items.includes(item)) {
+            throw new Error("Item is already saved by this family");
+        }
+
+        this.items.push(item);
+        
+        return item;
+    }
+
     validate(family: {
         name: string;
         members: User[];
