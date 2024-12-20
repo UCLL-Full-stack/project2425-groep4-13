@@ -93,29 +93,29 @@ const addMemberToFamily = async (
 
 }
 
-const editFamily = async (
-    { id, family: familyInput }:
-        { id: number, family: FamilyInput }
-): Promise<Family> => {
-    if (!familyInput.name) throw new Error("Family name is required.");
-    if (!familyInput.members) throw new Error("Family members are required.");
+const editFamily = async ({ family }: { family: FamilyInput }): Promise<Family> => {
+    if (!family.name) throw new Error("Family name is required.");
+    if (!family.members) throw new Error("Family members are required.");
 
-    const family = await familyDb.getFamilyById({ id: id });
-    if (!family) throw new Error(`Family with id ${id} not found.`);
+    const existingFamily = await familyDb.getFamilyByName({ name: family.name });
+    if (!existingFamily) throw new Error(`Family with name ${family.name} does not exist.`);
 
+    // lijst van Users maken uit de lijst met UserInputs via hun email
     const membersAsUsers = await Promise.all(
-        familyInput.members.map(async (member) => {
-            if (!member.email) throw new Error("User email is required.");
+        family.members.map(async (member) => {
+            if (!member.email) throw new Error("User email is required");
             const user = await userDb.getUserByEmail({ email: member.email });
-            if (!user) throw new Error(`User with email ${member.email} not found.`);
+            if (!user) throw new Error(`User with email ${member.email} not found`);
             return user;
         })
     );
 
-    family.setName(familyInput.name);
-    family.setMembers(membersAsUsers);
+    const updatedFamily = new Family({
+        name: family.name,
+        members: membersAsUsers,
+    });
 
-    return await familyDb.editFamily(family);
+    return await familyDb.editFamily(updatedFamily);
 }
 
 export default {

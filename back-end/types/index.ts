@@ -9,6 +9,7 @@ type UserInput = {
 };
 
 type FamilyInput = {
+    id?: number;
     name: string;
     members: UserInput[];
 };

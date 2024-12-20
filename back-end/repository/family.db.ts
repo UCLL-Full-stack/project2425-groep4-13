@@ -86,20 +86,6 @@ const getAllFamilies = async (): Promise<Family[]> => {
     }
 };
 
-const getFamilyById = async ({ id }: { id: number }): Promise<Family | null> => {
-    try {
-        const familyPrisma = await database.family.findUnique({
-            where: { id: id },
-            include: {
-                members: true,
-            }
-        });
-        return familyPrisma ? Family.from(familyPrisma) : null;
-    } catch (error) {
-        console.error(error);
-        throw new Error('Database error. See server log for details.');
-    }
-};
 
 const getFamilyByName = async ({ name }: { name: string }): Promise<Family | null> => {
     try {
@@ -166,7 +152,7 @@ const editFamily = async (family: Family): Promise<Family> => {
             where: { name: family.getName() },
             data: {
                 members: {
-                    connect: family.getMembers().map((member) => ({ id: member.getId() })),
+                    set: family.getMembers().map((member) => ({ id: member.getId() })),
                 }
             },
             include: {
@@ -178,11 +164,10 @@ const editFamily = async (family: Family): Promise<Family> => {
         console.error(error);
         throw new Error('Database error. See server log for details.');
     }
-}
+};
 
 export default {
     getAllFamilies,
-    getFamilyById,
     getFamilyByName,
     getFamilyByMember,
     createFamily,

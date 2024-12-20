@@ -275,18 +275,11 @@ familyRouter.post('/member', async (req: Request, res: Response, next: NextFunct
 
 /**
  * @swagger
- * /family/{id}:
+ * /family:
  *  put:
  *      security:
  *          - bearerAuth: []
  *      summary: Edit a family.
- *      parameters:
- *       - in: path
- *         name: familyId
- *         required: true
- *         description: The family's id.
- *         schema:
- *           type: string
  *      requestBody:
  *          required: true
  *          content:
@@ -301,10 +294,10 @@ familyRouter.post('/member', async (req: Request, res: Response, next: NextFunct
  *                      schema:
  *                          $ref: '#/components/schemas/Family'
  */
-familyRouter.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+familyRouter.put('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const familyInput = <FamilyInput>req.body;
-        const family = await familyService.editFamily({ id: Number(req.params.id), family: familyInput });
+        const family = await familyService.editFamily({ family: familyInput });
         res.status(200).json(family);
     } catch (error) {
         next(error);
