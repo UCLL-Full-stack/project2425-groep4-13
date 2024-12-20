@@ -53,6 +53,10 @@ const Items: React.FC = () => {
         getItemsOfFamily();
     }, []);
 
+    const handleNewItemAdded = async () => {
+        setAddNewItemWindowOpen(false); // toe doen
+        getItemsOfFamily(); // opnieuw fetchen en daarna zal pagina ook rererenderen
+    }
 
     return (
         <>
@@ -66,7 +70,7 @@ const Items: React.FC = () => {
 
                 <button onClick={() => { setAddNewItemWindowOpen(!addNewItemWindowOpen) }}>Add Item</button>
                 {
-                    addNewItemWindowOpen && <AddItemWindow />
+                    addNewItemWindowOpen && <AddItemWindow handleNewItemAdded={handleNewItemAdded} />
                 }
                 <ItemsOverviewTable itemGroups={groupedItems} />
             </main>

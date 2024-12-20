@@ -1,8 +1,13 @@
 import ItemService from "@services/ItemService";
 import { useState } from "react";
 import { Product } from '@types';
+import { useRouter } from "next/router";
 
-const AddItemWindow: React.FC = () => {
+type Props = {
+    handleNewItemAdded: () => void;
+}
+
+const AddItemWindow: React.FC<Props> = ({ handleNewItemAdded }) => {
     const [error, setError] = useState<string | null>(null);
     const [itemName, setItemName] = useState<string>("");
     const [itemAmount, setItemAmount] = useState<number>(0);
@@ -66,6 +71,8 @@ const AddItemWindow: React.FC = () => {
             }
 
             const result = await ItemService.addItemToFamily(familyName, item);
+
+            handleNewItemAdded();
 
         } catch (error) {
             // Handle any errors that occur
