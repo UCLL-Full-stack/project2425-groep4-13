@@ -1,4 +1,5 @@
 import Header from "@components/header";
+import AddItemWindow from "@components/items/AddItemWindow";
 import ItemsOverviewTable from "@components/items/ItemsOverviewTable";
 import ItemService from "@services/ItemService";
 import { ItemGroup, Item } from "@types";
@@ -10,12 +11,13 @@ const Items: React.FC = () => {
 
     const [items, setItems] = useState<Item[]>([]);
     const [groupedItems, setGroupedItems] = useState<ItemGroup[]>([]); // gegroepeerd op product
+    const [addNewItemWindowOpen, setAddNewItemWindowOpen] = useState<boolean>(false);
 
     const getItemsOfFamily = async () => {
         if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
         if (localStorage.getItem("Family") === null) { return; } // als er nog geen family is
 
-        const response = await ItemService.getItemsByFamilyNameOrderedByDate();
+        const response = await ItemService.getItemsByFamilyNameOrderedByDate(localStorage.getItem("Family")!);
         if (response.status === 200) { // als succesvolle fetch
             const json: Item[] = await response.json();
             setItems(json);
@@ -51,6 +53,10 @@ const Items: React.FC = () => {
         getItemsOfFamily();
     }, []);
 
+    const handleNewItemAdded = async () => {
+        setAddNewItemWindowOpen(false); // toe doen
+        getItemsOfFamily(); // opnieuw fetchen en daarna zal pagina ook rererenderen
+    }
 
     return (
         <>
@@ -62,15 +68,10 @@ const Items: React.FC = () => {
                 <h1 className="font-sans text-darkgreen text-3xl underline font-weight-700 font-bold">
                     Items</h1>
 
-                {/* <input
-                    type="checkbox"
-                    id="group-by-product"
-                    checked={groupByProduct}  // checkbox verbinden aan de state variabele
-                    onChange={toggleGroupByProduct}
-                />
-                <label htmlFor="group-by-product">Group by product</label> */}
-
-
+                <button onClick={() => { setAddNewItemWindowOpen(!addNewItemWindowOpen) }}>Add Item</button>
+                {
+                    addNewItemWindowOpen && <AddItemWindow handleNewItemAdded={handleNewItemAdded} />
+                }
                 <ItemsOverviewTable itemGroups={groupedItems} />
             </main>
 

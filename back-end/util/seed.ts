@@ -76,29 +76,6 @@ const main = async () => {
         },
     });
 
-
-    // families
-
-    const familyDoe = await prisma.family.create({
-        data: {
-            name: "Doe",
-            members: {
-                connect: [{id: userJohndoe.id}, {id: userJanedoe.id}, {id: userPlaydoe.id}]
-            },
-        },
-    });
-
-    const familySmith = await prisma.family.create({
-        data: {
-            name: "Smith",
-            members: {
-                connect: [{id: userJanesmith.id}, {id: userBabysmith.id}]
-            }
-        },
-    });
-
-
-
     // products
     const productEgg = await prisma.product.create({
         data: {
@@ -144,6 +121,34 @@ const main = async () => {
             expirationDate: set(new Date(), { date: 25 , month: 11, year: 2024}),
         }
     })
+
+
+    // families
+
+    const familyDoe = await prisma.family.create({
+        data: {
+            name: "Doe",
+            members: {
+                connect: [{id: userJohndoe.id}, {id: userJanedoe.id}, {id: userPlaydoe.id}]
+            },
+            items: {
+                connect: [{id: itemEggs.id}, {id: itemCheese.id}, {id: itemCheese2.id}]
+            }
+        },
+    });
+
+    const familySmith = await prisma.family.create({
+        data: {
+            name: "Smith",
+            members: {
+                connect: [{id: userJanesmith.id}, {id: userBabysmith.id}]
+            }
+        },
+    });
+
+
+
+    
 
 }
 

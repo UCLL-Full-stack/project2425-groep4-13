@@ -22,6 +22,11 @@ type JoinFamilyInput = {
     user: UserInput;
 }
 
+type AddItemInput = {
+    family: FamilyInput;
+    item: ItemInput;
+}
+
 type ProductInput = {
     id?: number;
     name: string;
@@ -49,4 +54,5 @@ export {
     Role,
     ProductInput,
     ItemInput,
+    AddItemInput,
 };

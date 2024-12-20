@@ -186,10 +186,104 @@ const createFamily = async (family: Family): Promise<Family> => {
     }
 };
 
+const addMemberToFamily = async ({ familyName, memberId }: { familyName: string, memberId: number }): Promise<Family> => {
+    try {
+        // checks
+        const familyPrisma = await database.family.findUnique({
+            where: { name: familyName },
+            include: {
+                members: true, // Include members to check if the member already exists
+            }
+        });
+
+        if (!familyPrisma) {
+            throw new Error('Family not found.');
+        }
+
+        const isMemberExists = familyPrisma.members.some(member => member.id === memberId);
+        if (isMemberExists) {
+            throw new Error('Member is already part of this family.');
+        }
+
+        // member toevoegen
+        const updatedFamily = await database.family.update({
+            where: { name: familyName },
+            data: {
+                members: {
+                    connect: { id: memberId }
+                }
+            },
+            include: {
+                members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
+            }
+        });
+
+        return Family.from(updatedFamily);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
+const addItemToFamily = async ({ familyName, itemId }: { familyName: string, itemId: number }): Promise<Family> => {
+    try {
+        // kijken of familie wel bestaat
+        const familyPrisma = await database.family.findUnique({
+            where: { name: familyName },
+            include: {
+                members: true,
+                items: true,
+            }
+        });
+
+        if (!familyPrisma) {
+            throw new Error('Family not found.');
+        }
+
+        // check
+        const isItemExists = familyPrisma.items.some(item => item.id === itemId);
+        if (isItemExists) {
+            throw new Error('Item is already part of this family.');
+        }
+
+        // item toevoegen
+        const updatedFamily = await database.family.update({
+            where: { name: familyName },
+            data: {
+                items: {
+                    connect: { id: itemId },
+                }
+            },
+            include: {
+                members: true,
+                items: {
+                    include: {
+                        product: true
+                    }
+                },
+            }
+        });
+
+        return Family.from(updatedFamily);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
+
+
 export default {
     getAllFamilies,
     getFamilyByName,
     getFamilyByMember,
     createFamily,
+    addMemberToFamily,
+    addItemToFamily,
     // getFamilyById,
 };

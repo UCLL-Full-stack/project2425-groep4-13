@@ -1,4 +1,6 @@
 import { Item } from "../model/item";
+import { Product } from "../model/product";
+import familyDb from "../repository/family.db";
 import itemDb from "../repository/item.db"
 import productDb from "../repository/product.db";
 import {ItemInput} from "../types";
@@ -8,8 +10,17 @@ const getAllItems = async (): Promise<Item[]> => itemDb.getallItems();
 
 const getAllItemsOrderByDate = async (): Promise<Item[]> => itemDb.getAllItemsOrderByDate();
 
-// hier nog een get items by family functie denk ik
-// of dat in family service?
+const getItemsByFamilyOrderByDate = async ({familyName}: {familyName: string}): Promise<Item[]> => {
+    if (!familyName) {
+        throw new Error("Family name is required.");
+    }
+
+    const family = await familyDb.getFamilyByName({name: familyName});
+    if (!family || !family.getId()) throw new Error("No family with this name found.")
+
+    return await itemDb.getFamilyItemsOrderByDate({familyId: family.getId()!});
+};
+
 
 const createItem = async ({
     product: productInput,
@@ -20,14 +31,30 @@ const createItem = async ({
     if (!amount) throw new Error("Amount is required.");
     if (!expirationDate) throw new Error("Expiration date is required.");
 
-    if (!productInput.id) throw new Error("Product ID is required.");
-    const databaseProduct = await productDb.getProductById({ id: productInput.id! });
+    console.log("ITEM ITEM ITEM");
+    console.log(productInput);
+
+    if (!productInput.name) throw new Error("Product name is required.");
+
+
+    const databaseProduct = await productDb.getProductByName({ name: productInput.name! });
+    let realDatabaseProduct;
+    if (!databaseProduct) { // als er nog geen product in de database zit met die naam
+        const newProduct = new Product({ name: productInput.name });
+
+        // in database zetten
+        const savedProduct = await productDb.createProduct(newProduct);
+
+        realDatabaseProduct = savedProduct;
+    } else {
+        realDatabaseProduct = databaseProduct;
+    }
 
     // als dat product niet bestaat
-    if (!databaseProduct) throw new Error(`Product with ID ${productInput.id} not found.`);
+    if (!realDatabaseProduct) throw new Error(`Product with name ${productInput.name} not found.`);
 
     const item = new Item({
-        product: databaseProduct!,
+        product: realDatabaseProduct!,
         amount,
         expirationDate,
     });
@@ -40,4 +67,5 @@ export default {
     getAllItems,
     createItem,
     getAllItemsOrderByDate,
+    getItemsByFamilyOrderByDate,
 }

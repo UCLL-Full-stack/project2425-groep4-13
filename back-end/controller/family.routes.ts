@@ -61,11 +61,29 @@
  *                      email:
  *                          type: string
  *                          description: The user's email.
+ *      AddItemInput:
+ *          type: object
+ *          properties:
+ *              family:
+ *                  type: object
+ *                  properties:
+ *                      name:
+ *                          type: string
+ *              item:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: number
+ *                      amount:
+ *                          type: number
+ *                      expirationDate:
+ *                          type: string
+ *                          format: date
  */
 
 import express, { NextFunction, Request, Response } from 'express';
 import familyService from '../service/family.service';
-import { FamilyInput, JoinFamilyInput, UserInput } from '../types';
+import { AddItemInput, FamilyInput, JoinFamilyInput, UserInput } from '../types';
 
 const familyRouter = express.Router();
 
@@ -271,5 +289,40 @@ familyRouter.post('/member', async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 });
+
+/**
+ * @swagger
+ * /family/item:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Add an existing item to an existing family.
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                     $ref: '#/components/schemas/AddItemInput'
+ *      responses:
+ *          200:
+ *              description: The item got added to the family.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Item'
+ *              
+
+ */
+familyRouter.post('/item', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const addItemInput = <AddItemInput>req.body;
+
+        const result = await familyService.addItemToFamily({family: addItemInput.family, item: addItemInput.item});
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 export { familyRouter };

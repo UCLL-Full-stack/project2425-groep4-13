@@ -49,6 +49,27 @@ const getAllItemsOrderByDate = async (): Promise<Item[]> => {
     }
 }
 
+const getFamilyItemsOrderByDate = async ({familyId}: {familyId: number}): Promise<Item[]> => {
+    try {
+        const itemsPrisma = await database.item.findMany({
+            where: {
+                familyId: familyId,
+            },
+            orderBy: {
+                expirationDate: 'asc', // afdalend sorteren op expiration date
+            },
+            include: {
+                product: true,
+            }
+        });
+        return itemsPrisma.map((itemPrisma) => Item.from(itemPrisma));
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
+
 // const getAllItemsOrderByDateGroupByProduct = async (): Promise<Item[]> => {
 //     try {
 //         const groupedItems = await database.item.groupBy({
@@ -110,4 +131,5 @@ export default {
     getallItems,
     getAllItemsOrderByDate,
     createItem,
+    getFamilyItemsOrderByDate,
 }

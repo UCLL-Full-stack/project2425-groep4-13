@@ -3,22 +3,12 @@ import ItemRow from "./ItemRow";
 import ItemGroupRow from "./ItemGroupRow";
 
 type Props = {
-    // items: Item[];
     itemGroups: ItemGroup[];
 }
 
-//oké dit moet dus een table tonen
-//sommige rijen kunnen een group zijn, anderen mogelijks niet
-//misschien moet er dus een algemeen type die bestaat uit Product, expirationdate en amount toch? en een boolean "isGroup"
-//oké ma de table component moet alle items ook kunnen hebben eigenlijk, want die kan expanden
-//misschien dus gewoon de logica allemaal hier in
-//groupBy wordt meegegeven als prop
-//als groupBy = false, gewoon alle items tonen
-//als groupBy = true, dan zou die eigenlijk een lijst moeten hebben die gesorteerd is op earliest expirationdate
-//of
-//anders kan alles als groep voorgesteld worden altijd
-//en dan gewoon validatie hier van als lengte van items in groep == 1 of niet?
-//dus er is een type "GroupedItems", met product, earliest expiration date, en dan ook een lijst van items?
+// alle items staan als ItemGroup opgeslagen
+// maar sommige groups bestaan maar uit één item (als er maar 1 van die soort is)
+// die worden dan anders getoond dan degenen waar er wel een groep van is
 
 const ItemsOverviewTable: React.FC<Props> = ({ itemGroups }: Props) => {
     return (
@@ -42,19 +32,6 @@ const ItemsOverviewTable: React.FC<Props> = ({ itemGroups }: Props) => {
                                         : <ItemRow item={itemGroup.items[0]} itemIndex={itemGroupIndex} />
                                 ))
                             }
-                            {/* {itemGroups.map((itemGroup, itemGroupIndex) => (
-
-                                itemGroup.items.length > 1
-                                    ? <tr></tr>
-                                    : <ItemRow item={itemGroup.items[0]} itemIndex={itemGroupIndex}>
-
-                                //     <tr key={itemGroupIndex} onClick={() => { }} role="button">
-                                //     <td>{itemGroup.product.name}</td>
-                                //     <td>{itemGroup.items.length > 1 ? "" : itemGroup.items[0].amount}</td>
-                                //     <td>{new Date(itemGroup.firstExpirationDate).toLocaleDateString()}</td>
-                                //     <td>{itemGroup.items.length > 1 ? "EXPAND" : ""}</td>
-                                // </tr>
-                            ))} */}
                         </tbody>
                     </table>
                 </div>
