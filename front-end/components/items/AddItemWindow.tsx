@@ -1,4 +1,6 @@
+import ItemService from "@services/ItemService";
 import { useState } from "react";
+import { Product } from '@types';
 
 const AddItemWindow: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
@@ -36,7 +38,40 @@ const AddItemWindow: React.FC = () => {
             return;
         }
 
-        // de rest
+        const familyName = localStorage.getItem("Family");
+        if (!familyName) {
+            return;
+        }
+
+        const product = {
+            name: itemName,
+        };
+
+        const item = {
+            product: product,
+            amount: itemAmount,
+            expirationDate: new Date(itemExpirationDate), // string naar Date converteren
+        };
+
+        try {
+            // eerst item aanmaken
+            const registeredItemResponse = await ItemService.registerItem(item);
+            const registeredItem = await registeredItemResponse.json(); // Get the response from the API
+
+            if (registeredItem && registeredItem.id) {
+                // en nu al meteen aan familie toevoegen
+                await ItemService.addItemToFamily(familyName, registeredItem);
+            } else {
+                setError("Failed to register the item.");
+            }
+
+            const result = await ItemService.addItemToFamily(familyName, item);
+
+        } catch (error) {
+            // Handle any errors that occur
+            console.error("Error adding item to family:", error);
+            setError("Failed to add item to the family.");
+        }
     }
 
 

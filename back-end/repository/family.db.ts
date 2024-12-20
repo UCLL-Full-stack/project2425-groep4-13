@@ -232,12 +232,12 @@ const addMemberToFamily = async ({ familyName, memberId }: { familyName: string,
 
 const addItemToFamily = async ({ familyName, itemId }: { familyName: string, itemId: number }): Promise<Family> => {
     try {
-        // Check if the family exists
+        // kijken of familie wel bestaat
         const familyPrisma = await database.family.findUnique({
             where: { name: familyName },
             include: {
-                members: true, // Include members as well
-                items: true,   // Include existing items
+                members: true,
+                items: true,
             }
         });
 
@@ -245,31 +245,31 @@ const addItemToFamily = async ({ familyName, itemId }: { familyName: string, ite
             throw new Error('Family not found.');
         }
 
-        // Check if the item is already part of the family (if necessary)
+        // check
         const isItemExists = familyPrisma.items.some(item => item.id === itemId);
         if (isItemExists) {
             throw new Error('Item is already part of this family.');
         }
 
-        // Add the item to the family
+        // item toevoegen
         const updatedFamily = await database.family.update({
             where: { name: familyName },
             data: {
                 items: {
-                    connect: { id: itemId },  // Connect the item to the family
+                    connect: { id: itemId },
                 }
             },
             include: {
-                members: true,  // Include members in the updated family response
+                members: true,
                 items: {
                     include: {
-                        product: true  // Include item details like product info
+                        product: true
                     }
                 },
             }
         });
 
-        return Family.from(updatedFamily);  // Return the updated family
+        return Family.from(updatedFamily);
     } catch (error) {
         console.error(error);
         throw new Error('Database error. See server log for details.');
@@ -284,5 +284,6 @@ export default {
     getFamilyByMember,
     createFamily,
     addMemberToFamily,
+    addItemToFamily,
     // getFamilyById,
 };

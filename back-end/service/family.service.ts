@@ -1,10 +1,11 @@
 import { User } from "../model/user";
 import { Family } from "../model/family";
 import familyDb from "../repository/family.db";
-import { FamilyInput, UserInput } from "../types";
+import { FamilyInput, ItemInput, UserInput } from "../types";
 import userDb from "../repository/user.db";
 import { memoryUsage } from "process";
 import itemDb from "../repository/item.db";
+import { Item } from "../model/item";
 
 
 const getAllFamilies = async (): Promise<Family[]> => familyDb.getAllFamilies();
@@ -119,6 +120,42 @@ const addMemberToFamily = async (
     }
 }
 
+// functie om een item toe te voegen aan een familie
+const addItemToFamily = async (
+    {family: familyInput, item: itemInput}:
+    {family: FamilyInput; item: ItemInput; }
+): Promise<Item | null> => {
+    console.log("HELLOO SIGMAS");
+    console.log(itemInput);
+    if (!familyInput.name) throw new Error("Family name is required.");
+    if (!itemInput.id) throw new Error("Item id is required.");
+
+    const family = await familyDb.getFamilyByName({name: familyInput.name}); // juiste family fetchen
+    const item = await itemDb.getItemById({id: itemInput.id}); // juiste item fetchen
+
+    if (!family) {
+        throw new Error("Family not found");
+    }
+    if (!item) {
+        throw new Error("Item not found");
+    }
+
+    try {
+        // item toevoegen in de database
+        const updatedFamily = await familyDb.addItemToFamily({
+            familyName: family.getName(),
+            itemId: item.getId()!,
+        });
+
+        // de toegevoegde item teruggeven
+        return item;
+    } catch (error) {
+        console.error("Error adding item to family:", error);
+        throw new Error("Failed to add item to family.");
+    }
+};
+
+
 export default {
     getAllFamilies,
     getFamilyByName,
@@ -127,5 +164,6 @@ export default {
     checkAndGetFamilyByMember,
     createFamily,
     addMemberToFamily,
+    addItemToFamily,
 };
 

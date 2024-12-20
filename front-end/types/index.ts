@@ -26,6 +26,7 @@ export type Item = {
     expirationDate: Date,
 }
 
+
 // type voor een groep items met zelfde product
 export type ItemGroup = {
     product: Product,

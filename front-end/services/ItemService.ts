@@ -29,10 +29,24 @@ const registerItem = async (item: Item) => {
     });
 }
 
+const addItemToFamily = async (familyName: string, item: Item) => {
+    return await fetch(process.env.NEXT_PUBLIC_API_URL + "/family/item", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            family: { name: familyName }, // You might need to pass the family name here
+            item: item, // Item details
+        }),
+    });
+};
+
 const ItemService = {
     // getItemsByFamilyName,
     getItemsByFamilyNameOrderedByDate,
     registerItem,
+    addItemToFamily,
 };
 
 export default ItemService;
