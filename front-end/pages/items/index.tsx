@@ -15,7 +15,7 @@ const Items: React.FC = () => {
         if (localStorage.getItem("loggedInUser") === null) { return; } // als er nog geen user ingelogd is
         if (localStorage.getItem("Family") === null) { return; } // als er nog geen family is
 
-        const response = await ItemService.getItemsByFamilyNameOrderedByDate();
+        const response = await ItemService.getItemsByFamilyNameOrderedByDate(localStorage.getItem("Family")!);
         if (response.status === 200) { // als succesvolle fetch
             const json: Item[] = await response.json();
             setItems(json);

@@ -129,6 +129,8 @@ itemRouter.get('/order/date', async (req: Request, res: Response, next: NextFunc
  */
 itemRouter.get('/family/:familyName/order/date', async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log("IT GOT THERE THOUGH");
+        console.log(req.params.familyName);
         // console.log("KIBIDI");
         // console.log(req.params)
         const items = await itemService.getItemsByFamilyOrderByDate({familyName: req.params.familyName});
