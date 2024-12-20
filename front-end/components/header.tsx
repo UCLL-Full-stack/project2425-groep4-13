@@ -21,33 +21,33 @@ const Header: React.FC = () => {
     return (
         <header className="p-3 mb-3 border-bottom bg-dark bg-gradient">
             <nav className="nav justify-content-center">
-                <Link href="/" className="current nav-link px-4 fs-5 theme-colors-darkgreen">
+                <Link href="/" className="m-4 py-3 font-sans text-darkgreen text-xl font-weight-700 font-bold hover:underline">
                     HOME
                 </Link>
-                <Link href="/items" className="nav-link px-4 fs-5 theme-colors-darkgreen">
+                <Link href="/items" className="m-4 py-3 font-sans text-darkgreen text-xl font-weight-700 font-bold hover:underline">
                     ITEMS
                 </Link>
-                <Link href="/families" className="nav-link px-4 fs-5 theme-colors-darkgreen">
+                <Link href="/families" className="m-4 py-3 font-sans text-darkgreen text-xl font-weight-700 font-bold hover:underline">
                     MY FAMILIES
                 </Link>
+                {loggedInUser && (
+                    <span className='m-4 py-3 font-sans text-darkgreen text-xl font-weight-700 font-bold'>
+                        {JSON.parse(loggedInUser).fullname}</span>
+                )}
                 {!loggedInUser && (
-                    <Link href="/login" className="rounded-outline-button">
+                    <Link href="/login" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
                         LOG IN
                     </Link>
                 )}
                 {loggedInUser && (
-                    <Link href="/login" className="rounded-outline-button" onClick={handleClick}>
+                    <Link href="/login" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen"
+                        onClick={handleClick}>
                         LOG OUT
                     </Link>
                 )}
                 {!loggedInUser && (
-                    <Link href="/register" className="rounded-outline-button">
+                    <Link href="/register" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
                         Register
-                    </Link>
-                )}
-                {loggedInUser && (
-                    <Link href="/profile" className="rounded-outline-button">
-                        {JSON.parse(loggedInUser).fullname}
                     </Link>
                 )}
             </nav>
