@@ -1,5 +1,6 @@
 import { ItemGroup } from "@types";
 import { useState } from "react";
+import ItemRow from "./ItemRow";
 
 type Props = {
     itemGroup: ItemGroup;
@@ -40,12 +41,7 @@ const ItemGroupRow: React.FC<Props> = ({ itemGroup, itemGroupIndex }: Props) => 
                                                 <td>CLOSE</td>
                                             </tr>
                                             {itemGroup.items.map((item, index) => (
-                                                <tr key={index}>
-                                                    <td>{item.product.name}</td>
-                                                    <td>{item.amount}</td>
-                                                    <td>{new Date(item.expirationDate).toLocaleDateString()}</td>
-                                                    <td></td>
-                                                </tr>
+                                                <ItemRow item={item} itemIndex={index} />
                                             ))}
                                         </tbody>
                                     </table>
