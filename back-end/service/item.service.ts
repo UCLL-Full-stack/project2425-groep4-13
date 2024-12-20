@@ -8,8 +8,14 @@ const getAllItems = async (): Promise<Item[]> => itemDb.getallItems();
 
 const getAllItemsOrderByDate = async (): Promise<Item[]> => itemDb.getAllItemsOrderByDate();
 
-// hier nog een get items by family functie denk ik
-// of dat in family service?
+const getItemsByFamilyOrderByDate = async ({familyId}: {familyId: number}): Promise<Item[]> => {
+    if (!familyId) {
+        throw new Error("Family ID is required.");
+    }
+
+    return await itemDb.getFamilyItemsOrderByDate({familyId});
+};
+
 
 const createItem = async ({
     product: productInput,
@@ -40,4 +46,5 @@ export default {
     getAllItems,
     createItem,
     getAllItemsOrderByDate,
+    getItemsByFamilyOrderByDate,
 }

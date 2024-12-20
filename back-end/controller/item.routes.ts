@@ -80,7 +80,7 @@ itemRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swagger
- * /item:
+ * /item/order/date:
  *  get:
  *      summary: Get a list of all items, ordered by ascending expiration date
  *      responses:
@@ -97,6 +97,39 @@ itemRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 itemRouter.get('/order/date', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const items = await itemService.getAllItemsOrderByDate();
+        res.status(200).json(items);
+        
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * @swagger
+ * /item/family/{familyId}/order/date:
+ *  get:
+ *      summary: Get a list of all items of a family, ordered by ascending expiration date
+ *      parameters:
+ *        - in: path
+ *          name: familyId
+ *          required: true
+ *          description: The family's id.
+ *          schema:
+ *              type: number
+ *      responses:
+ *          200:
+ *              description: A list of items.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Item'
+ *                      
+ */
+itemRouter.get('/family/:familyId/order/date', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const items = await itemService.getItemsByFamilyOrderByDate({familyId: Number(req.params.familyId)});
         res.status(200).json(items);
         
     } catch (error) {
