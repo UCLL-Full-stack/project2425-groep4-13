@@ -9,9 +9,55 @@ type Props = {
 const ItemGroupRow: React.FC<Props> = ({ itemGroup, itemGroupIndex }: Props) => {
     const [collapsed, setCollapsed] = useState<boolean>(true);
 
+    const toggleCollapse = () => {
+        setCollapsed(!collapsed);
+    }
+
     return (
         <>
-            <tr>HEY</tr>
+            <tr key={itemGroupIndex} onClick={toggleCollapse} className="w-full hover:bg-mediumgray">
+                {
+                    collapsed
+                        ? (
+                            <>
+                                <td>{itemGroup.product.name}</td>
+                                <td></td>
+                                <td>{new Date(itemGroup.firstExpirationDate).toLocaleDateString()}</td>
+                                <td>OPEN</td>
+                            </>
+                        )
+                        : (
+                            <>
+                                <td colSpan={4}> {/* Breedte innemen van alle kolommen */}
+                                    <table className='w-full table-fixed mt-1'>
+                                        {/* geen thead nodig omdat die al boven staat van de andere table */}
+                                        <tbody className="outline outline-2 outline-gray-400 hover:bg-gray-200 rounded-sm">
+                                            {/* een rij die de itemgroup nog steeds voorstelt */}
+                                            <tr>
+                                                <td>{itemGroup.product.name}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>CLOSE</td>
+                                            </tr>
+                                            {itemGroup.items.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td>{item.product.name}</td>
+                                                    <td>{item.amount}</td>
+                                                    <td>{new Date(item.expirationDate).toLocaleDateString()}</td>
+                                                    <td></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </>
+                        )
+                }
+
+
+
+
+            </tr>
         </>
     )
 }
