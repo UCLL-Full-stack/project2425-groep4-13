@@ -6,8 +6,16 @@ const getItemsByFamilyName = async () => {
         headers: {
             "Content-Type": "application/json",
         },
-    }  
-    );
+    });
+}
+
+const getItemsByFamilyNameOrderedByDate = async () => {
+    return await fetch(process.env.NEXT_PUBLIC_API_URL + "/item/order/date", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
 }
 
 const registerItem = async (item: Item) => {
@@ -23,6 +31,7 @@ const registerItem = async (item: Item) => {
 
 const ItemService = {
     getItemsByFamilyName,
+    getItemsByFamilyNameOrderedByDate,
     registerItem,
 };
 

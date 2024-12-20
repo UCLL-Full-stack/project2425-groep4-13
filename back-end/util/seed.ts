@@ -135,6 +135,16 @@ const main = async () => {
         }
     })
 
+    const itemCheese2 = await prisma.item.create({
+        data: {
+            product: {
+                connect: productCheese,
+            },
+            amount: 1,
+            expirationDate: set(new Date(), { date: 25 , month: 11, year: 2024}),
+        }
+    })
+
 }
 
 (async () => {

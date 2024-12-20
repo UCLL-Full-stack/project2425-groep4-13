@@ -6,6 +6,8 @@ import {ItemInput} from "../types";
 
 const getAllItems = async (): Promise<Item[]> => itemDb.getallItems();
 
+const getAllItemsOrderByDate = async (): Promise<Item[]> => itemDb.getAllItemsOrderByDate();
+
 // hier nog een get items by family functie denk ik
 // of dat in family service?
 
@@ -37,4 +39,5 @@ const createItem = async ({
 export default {
     getAllItems,
     createItem,
+    getAllItemsOrderByDate,
 }
