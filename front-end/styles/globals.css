@@ -4,7 +4,7 @@
 
 /* GENERAL */
 
-/* :root {
+:root {
   background-color: whitesmoke;
 }
 
@@ -22,11 +22,11 @@ h3,
 h4 {
   color: forestgreen;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-} */
+}
 
 /* NAV */
 
-/* nav {
+nav {
   background-color: rgb(231, 231, 231);
   display: flex;
   justify-content: center;
@@ -55,10 +55,10 @@ nav a:hover {
 
 nav .current {
   text-decoration: underline solid forestgreen 0.1em;
-} */
+}
 
 /* BUTTON TYPES */
-/* .rounded-outline-button {
+.rounded-outline-button {
   border-radius: 100em;
   border: solid forestgreen 0.1em;
 }
@@ -98,16 +98,16 @@ nav .current {
 .centered {
   width: 100%;
   text-align: center;
-} */
+}
 
 /* TEXT */
-/* p {
+p {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-} */
+}
 
 /* TABLES */
 
-/* .list-of-tables {
+.list-of-tables {
   list-style-type: none;
   padding: 0px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -131,14 +131,14 @@ nav .current {
   border: none;
   text-align: left;
   font-size: large;
-} */
+}
 
-/* .collapsible.collapsed .collapsible-header { */
-/* border-radius: 0.25em; */
-/* als gecollapsed dan aan alle kanten border radius */
-/* } */
+.collapsible.collapsed .collapsible-header {
+  border-radius: 0.25em;
+  /* als gecollapsed dan aan alle kanten border radius */
+}
 
-/* .collapsible.expanded .collapsible-header {
+.collapsible.expanded .collapsible-header {
   border-radius: 0.25em 0.25em 0em 0em;
 }
 
@@ -176,10 +176,10 @@ nav .current {
   border: none;
   border-bottom: 5px black solid;
   margin: 0%;
-} */
+}
 
 /* FORMS */
-/* .login-form {
+.login-form {
   background-color: rgb(231, 231, 231);
   border: lightgray 0.2em solid;
   border-radius: 0.25em;
@@ -226,4 +226,4 @@ nav .current {
 
 .form-error {
   color: red;
-} */
+}

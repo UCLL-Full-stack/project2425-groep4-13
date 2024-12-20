@@ -71,7 +71,7 @@ const FamiliesSearchBar: React.FC<Props> = ({ handleRequestedFamilyJoin }: Props
     }
 
     return (
-        <div>
+        <div className="login-form">
             <input type="text" placeholder="Enter family name" value={currentSearchTerm} onChange={(e) => setCurrentSearchTerm(e.target.value)} />
             <button onClick={searchFamily} >
                 Join Family

@@ -10,8 +10,8 @@ type Props = {
 const FamilySignup: React.FC<Props> = ({ showFamilyRegisterWindow, showFamilySearchWindow }: Props) => {
     return (
         <div>
-            <button onClick={showFamilyRegisterWindow}>Register New Family</button>
-            <button onClick={showFamilySearchWindow}>Join Existing Family</button>
+            <button onClick={showFamilyRegisterWindow} className='colored-button'>Register New Family</button>
+            <button onClick={showFamilySearchWindow} className='colored-button'>Join Existing Family</button>
         </div>
     )
 
