@@ -21,7 +21,7 @@ const ItemGroupRow: React.FC<Props> = ({ itemGroup, itemGroupIndex }: Props) => 
                     collapsed
                         ? (
                             <>
-                                <td>{itemGroup.product.name}</td>
+                                <td className="underline">{itemGroup.product.name}</td>
                                 <td></td>
                                 <td>{new Date(itemGroup.firstExpirationDate).toLocaleDateString()}</td>
                                 <td>OPEN</td>
@@ -35,7 +35,7 @@ const ItemGroupRow: React.FC<Props> = ({ itemGroup, itemGroupIndex }: Props) => 
                                         <tbody className="outline outline-2 outline-gray-400 hover:bg-gray-200 rounded-sm">
                                             {/* een rij die de itemgroup nog steeds voorstelt */}
                                             <tr>
-                                                <td>{itemGroup.product.name}</td>
+                                                <td className="underline">{itemGroup.product.name}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td>CLOSE</td>
