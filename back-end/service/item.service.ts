@@ -1,4 +1,5 @@
 import { Item } from "../model/item";
+import familyDb from "../repository/family.db";
 import itemDb from "../repository/item.db"
 import productDb from "../repository/product.db";
 import {ItemInput} from "../types";
@@ -8,12 +9,15 @@ const getAllItems = async (): Promise<Item[]> => itemDb.getallItems();
 
 const getAllItemsOrderByDate = async (): Promise<Item[]> => itemDb.getAllItemsOrderByDate();
 
-const getItemsByFamilyOrderByDate = async ({familyId}: {familyId: number}): Promise<Item[]> => {
-    if (!familyId) {
-        throw new Error("Family ID is required.");
+const getItemsByFamilyOrderByDate = async ({familyName}: {familyName: string}): Promise<Item[]> => {
+    if (!familyName) {
+        throw new Error("Family name is required.");
     }
 
-    return await itemDb.getFamilyItemsOrderByDate({familyId});
+    const family = await familyDb.getFamilyByName({name: familyName});
+    if (!family || !family.getId()) throw new Error("No family with this name found.")
+
+    return await itemDb.getFamilyItemsOrderByDate({familyId: family.getId()!});
 };
 
 

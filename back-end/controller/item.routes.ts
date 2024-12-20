@@ -106,16 +106,16 @@ itemRouter.get('/order/date', async (req: Request, res: Response, next: NextFunc
 
 /**
  * @swagger
- * /item/family/{familyId}/order/date:
+ * /item/family/{familyName}/order/date:
  *  get:
  *      summary: Get a list of all items of a family, ordered by ascending expiration date
  *      parameters:
  *        - in: path
- *          name: familyId
+ *          name: familyName
  *          required: true
- *          description: The family's id.
+ *          description: The family's name.
  *          schema:
- *              type: number
+ *              type: string
  *      responses:
  *          200:
  *              description: A list of items.
@@ -127,9 +127,11 @@ itemRouter.get('/order/date', async (req: Request, res: Response, next: NextFunc
  *                              $ref: '#/components/schemas/Item'
  *                      
  */
-itemRouter.get('/family/:familyId/order/date', async (req: Request, res: Response, next: NextFunction) => {
+itemRouter.get('/family/:familyName/order/date', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const items = await itemService.getItemsByFamilyOrderByDate({familyId: Number(req.params.familyId)});
+        // console.log("KIBIDI");
+        // console.log(req.params)
+        const items = await itemService.getItemsByFamilyOrderByDate({familyName: req.params.familyName});
         res.status(200).json(items);
         
     } catch (error) {
