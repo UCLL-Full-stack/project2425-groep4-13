@@ -1,4 +1,6 @@
 import { ItemGroup, Item } from "@types";
+import ItemRow from "./ItemRow";
+import ItemGroupRow from "./ItemGroupRow";
 
 type Props = {
     // items: Item[];
@@ -26,21 +28,33 @@ const ItemsOverviewTable: React.FC<Props> = ({ itemGroups }: Props) => {
                     <table className='w-full table-fixed mt-5'>
                         <thead className='bg-darkgreen text-whitesmoke w-full'>
                             <tr className=''>
-                                <th scope="col" className='w-1/25'>Name</th>
-                                <th scope="col" className='w-1/25'>Amount</th>
-                                <th scope="col" className='w-1/25'>Expiration Date</th>
-                                <th scope="col" className='w-1/25'></th>
+                                <th scope="col" className='w-1/27'>Name</th>
+                                <th scope="col" className='w-1/27'>Amount</th>
+                                <th scope="col" className='w-1/27'>First Expiration Date</th>
+                                <th scope="col" className='w-1/19'></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {itemGroups.map((itemGroup, itemGroupIndex) => (
-                                <tr key={itemGroupIndex} onClick={() => { }} role="button">
-                                    <td>{itemGroup.product.name}</td>
-                                    <td>{itemGroup.items.length > 1 ? "/" : itemGroup.items[0].amount}</td>
-                                    <td>{new Date(itemGroup.firstExpirationDate).toLocaleDateString()}</td>
-                                    <td>{itemGroup.items.length > 1 ? "EXPAND" : ""}</td>
-                                </tr>
-                            ))}
+                            {
+                                itemGroups.map((itemGroup, itemGroupIndex) => (
+                                    itemGroup.items.length > 1
+                                        ? <ItemGroupRow itemGroup={itemGroup} itemGroupIndex={itemGroupIndex} />
+                                        : <ItemRow item={itemGroup.items[0]} itemIndex={itemGroupIndex} />
+                                ))
+                            }
+                            {/* {itemGroups.map((itemGroup, itemGroupIndex) => (
+
+                                itemGroup.items.length > 1
+                                    ? <tr></tr>
+                                    : <ItemRow item={itemGroup.items[0]} itemIndex={itemGroupIndex}>
+
+                                //     <tr key={itemGroupIndex} onClick={() => { }} role="button">
+                                //     <td>{itemGroup.product.name}</td>
+                                //     <td>{itemGroup.items.length > 1 ? "" : itemGroup.items[0].amount}</td>
+                                //     <td>{new Date(itemGroup.firstExpirationDate).toLocaleDateString()}</td>
+                                //     <td>{itemGroup.items.length > 1 ? "EXPAND" : ""}</td>
+                                // </tr>
+                            ))} */}
                         </tbody>
                     </table>
                 </div>
