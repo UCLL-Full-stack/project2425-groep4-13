@@ -86,10 +86,25 @@ const getAllFamilies = async (): Promise<Family[]> => {
     }
 };
 
-const getFamilyByName = async ({name} : {name: string}): Promise<Family | null> => {
+const getFamilyById = async ({ id }: { id: number }): Promise<Family | null> => {
     try {
         const familyPrisma = await database.family.findUnique({
-            where: {name},
+            where: { id: id },
+            include: {
+                members: true,
+            }
+        });
+        return familyPrisma ? Family.from(familyPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
+const getFamilyByName = async ({ name }: { name: string }): Promise<Family | null> => {
+    try {
+        const familyPrisma = await database.family.findUnique({
+            where: { name },
             include: {
                 members: true,
             }
@@ -129,13 +144,13 @@ const createFamily = async (family: Family): Promise<Family> => {
             data: {
                 name: family.getName(),
                 members: {
-                    connect: family.getMembers().map((member) => ({id: member.getId()})),
+                    connect: family.getMembers().map((member) => ({ id: member.getId() })),
                 }
             },
-            include:{
+            include: {
                 members: true,
             }
-            
+
 
         })
         return Family.from(familyPrisma);
@@ -145,9 +160,31 @@ const createFamily = async (family: Family): Promise<Family> => {
     }
 };
 
+const editFamily = async (family: Family): Promise<Family> => {
+    try {
+        const familyPrisma = await database.family.update({
+            where: { name: family.getName() },
+            data: {
+                members: {
+                    connect: family.getMembers().map((member) => ({ id: member.getId() })),
+                }
+            },
+            include: {
+                members: true,
+            }
+        });
+        return Family.from(familyPrisma);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
 export default {
     getAllFamilies,
+    getFamilyById,
     getFamilyByName,
     getFamilyByMember,
     createFamily,
+    editFamily,
 };

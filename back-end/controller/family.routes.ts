@@ -1,6 +1,11 @@
 /**
  * @swagger
  *   components:
+ *    securitySchemes:
+ *     bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  *    schemas:
  *      Family:
  *          type: object
@@ -261,8 +266,46 @@ familyRouter.post('/member', async (req: Request, res: Response, next: NextFunct
         // TODO de user moet nog zijn role op "pending" gezet krijgen ook!
         // want default is null en front-end geeft dat gwn zo door en kan dat niet zelf wijzigen
 
-        const result = await familyService.addMemberToFamily({family: joinFamilyInput.family, user: joinFamilyInput.user}); // die nieuwe user wordt gewoon als member toegevoegd, maar de "role" van de user is nog "pending"
+        const result = await familyService.addMemberToFamily({ family: joinFamilyInput.family, user: joinFamilyInput.user }); // die nieuwe user wordt gewoon als member toegevoegd, maar de "role" van de user is nog "pending"
         res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+});
+
+/**
+ * @swagger
+ * /family/{id}:
+ *  put:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Edit a family.
+ *      parameters:
+ *       - in: path
+ *         name: familyId
+ *         required: true
+ *         description: The family's id.
+ *         schema:
+ *           type: string
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/FamilyInput'
+ *      responses:
+ *          200:
+ *              description: The updated family.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Family'
+ */
+familyRouter.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const familyInput = <FamilyInput>req.body;
+        const family = await familyService.editFamily({ id: Number(req.params.id), family: familyInput });
+        res.status(200).json(family);
     } catch (error) {
         next(error);
     }

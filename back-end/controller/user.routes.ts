@@ -1,6 +1,11 @@
 /**
  * @swagger
  *   components:
+ *    securitySchemes:
+ *     bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  *    schemas:
  *      User:
  *          type: object
@@ -112,7 +117,7 @@ userRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 userRouter.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const email = req.params.email;
-        const user = await userService.getUserByEmail({email});
+        const user = await userService.getUserByEmail({ email });
         res.status(200).json(user);
     } catch (error) {
         next(error);

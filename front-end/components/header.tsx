@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { LogOut, LogIn, UserRoundPlus } from 'lucide-react';
 
 
 const Header: React.FC = () => {
@@ -32,19 +33,19 @@ const Header: React.FC = () => {
                         {JSON.parse(loggedInUser).fullname}</span>
                 )}
                 {!loggedInUser && (
-                    <Link href="/login" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
-                        LOG IN
+                    <Link href="/login" className="flex m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
+                        LOG IN <LogIn className='ml-1 relative' />
                     </Link>
                 )}
                 {loggedInUser && (
-                    <Link href="/login" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen"
+                    <Link href="/login" className="flex items-center m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen"
                         onClick={handleClick}>
-                        LOG OUT
+                        LOG OUT <LogOut className='ml-1 relative' />
                     </Link>
                 )}
                 {!loggedInUser && (
-                    <Link href="/register" className="m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
-                        Register
+                    <Link href="/register" className="flex m-4 p-3 font-sans text-darkgreen text-xl font-weight-700 font-bold border-2 border-darkgreen rounded-full hover:text-lightgreen hover:border-lightgreen">
+                        REGISTER <UserRoundPlus className='ml-2 relative' />
                     </Link>
                 )}
             </nav>

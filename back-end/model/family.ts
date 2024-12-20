@@ -1,5 +1,5 @@
 import { User } from "./user";
-import {Family as FamilyPrisma, User as UserPrisma} from '@prisma/client'
+import { Family as FamilyPrisma, User as UserPrisma } from '@prisma/client'
 
 
 export class Family {
@@ -61,11 +61,19 @@ export class Family {
         );
     }
 
-    static from({ id, name, members, }: FamilyPrisma & {members: UserPrisma[];}) {
+    setName(name: string): void {
+        this.name = name;
+    }
+
+    setMembers(members: User[]): void {
+        this.members = members;
+    }
+
+    static from({ id, name, members, }: FamilyPrisma & { members: UserPrisma[]; }) {
         const mappedMembers = members.map((member) => {
             return User.from(member); // Transform the member using User.from
         });
-    
+
         return new Family({
             id,
             name,
