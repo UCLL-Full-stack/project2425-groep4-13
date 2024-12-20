@@ -89,12 +89,9 @@ const addMemberToFamily = async (
     {family: familyInput, user: userInput, }:
     {family: FamilyInput; user: UserInput; }
 ): Promise<User | null> => {
-    //TODO aanpassen naar id
     if (!familyInput.name) throw new Error("Family name is required.");
-    // if (!familyInput.id) throw new Error("Family id is required.");
     if (!userInput.email) throw new Error("User email is requird.");
 
-    //TODO aanpassen naar id
     const family = await familyDb.getFamilyByName({name: familyInput.name}); // juiste family fetchen
 
     const user = await userDb.getUserByEmail({email: userInput.email}); // juiste user fetchen
@@ -106,9 +103,20 @@ const addMemberToFamily = async (
     if (!user) {
         throw new Error("User not found");
     }
-    
-    return family.addMemberToFamily(user);
 
+    try {
+        // member toevoegen in database
+        const updatedFamily = await familyDb.addMemberToFamily({
+            familyName: family.getName(),
+            memberId: user.getId()!,
+        });
+
+        // nieuwe member returnen
+        return user;
+    } catch (error) {
+        console.error("Error adding member to family:", error);
+        throw new Error("Failed to add member to family.");
+    }
 }
 
 export default {
